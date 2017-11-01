@@ -1,4 +1,9 @@
-const User = require('./user')
+const Category = require('./category');
+const OrderProduct = require('./order_product');
+const Order = require('./order.js');
+const Product = require('./product');
+const Review = require('./review');
+const User = require('./user');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -14,5 +19,5 @@ const User = require('./user')
  * instead of: const User = require('../db/models/user')
  */
 module.exports = {
-  User
+  Category, OrderProduct, Order, Product, Review, User
 }
