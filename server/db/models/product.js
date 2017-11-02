@@ -14,15 +14,16 @@ const Product = db.define('product', {
         type: Sequelize.FLOAT,
         allowNull: false
       },
-      quantity_available: {
+      quantityAvailable: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
       photo: {
         type: Sequelize.TEXT,
         default: ''
-      },
+      }
 })
+///Products will have to belongtoMany Categories and vice-versa
 
 module.exports = Product;
 
