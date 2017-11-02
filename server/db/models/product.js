@@ -21,7 +21,7 @@ const Product = db.define('product', {
       photo: {
         type: Sequelize.TEXT,
         default: ''
-      },
+      }
 })
 
 module.exports = Product;
