@@ -8,6 +8,7 @@ const OrderProduct = db.define('order_product', {
     // productId: {
     //     //foreign id
     // },
+<<<<<<< HEAD
     quantity: {
         type: Sequelize.INTEGER
     },
@@ -15,6 +16,15 @@ const OrderProduct = db.define('order_product', {
         type: Sequelize.FLOAT,
         default: null
     }
+=======
+    // quantity: {
+    //     type: Sequelize.INTEGER
+    // },
+    // price: {
+    //     type: Sequelize.FLOAT,
+    //     default: null
+    // }
+>>>>>>> Tony
 })
 
 
