@@ -6,22 +6,22 @@ const Product = db.define('product', {
         type: Sequelize.STRING,
         allowNull: false
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false
-      },
-      price: {
-        type: Sequelize.FLOAT,
-        allowNull: false
-      },
-      quantity_available: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      photo: {
-        type: Sequelize.TEXT,
-        default: ''
-      },
+    description: {
+      type: Sequelize.TEXT,
+      allowNull: false
+    },
+    price: {
+      type: Sequelize.FLOAT,
+      allowNull: false
+    },
+    available_quantity: {
+      type: Sequelize.INTEGER,
+      allowNull: false
+    },
+    photo: {
+      type: Sequelize.TEXT,
+      default: ''
+    },
 })
 
 module.exports = Product;
