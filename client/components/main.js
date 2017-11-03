@@ -10,6 +10,8 @@ import {logout} from '../store'
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
+
+
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
 
@@ -30,6 +32,7 @@ const Main = (props) => {
               <Link to="/signup">Sign Up</Link>
             </div>
         }
+        <Link to='/shopping-cart'><button className="btn btn-default"> Cart</button></Link>
       </nav>
       <hr />
       {children}
