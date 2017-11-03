@@ -19,15 +19,22 @@ const User = require('./user');
  * instead of: const User = require('../db/models/user')
  */
 
-User.hasMany(Review);
-User.hasMany(Order);
-Order.belongsToMany(User, {through: 'user_orders'});
-Product.hasMany(Review);
-Product.belongsToMany(Category, {through: 'product_categories'});
-Category.belongsToMany(Product, {through: 'product_categories'})
-OrderProduct.belongsTo(Order)
-OrderProduct.belongsTo(Product, {as: 'product'})
 
+
+ // NEED BOTH belongsToMany when dealing with through tables
+User.hasMany(Review);//1:M
+Review.belongsToMany(User, {through: 'user_reviews'})
+User.belongsToMany(Review,{through: 'user_reviews'});//N:M
+User.hasMany(Order);//1:M
+Product.hasMany(Review);//1:M unsure if we need a Review.belongsToMany(Product) when all we will need to do to get single product reviews is product.getReviews
+Product.belongsToMany(Category, {through: 'product_categories'});
+Category.belongsToMany(Product, {through: 'product_categories'});//N:M
+Order.hasMany(Product);//1:M
+Product.belongsToMany(Order, {through: 'order_product'});
+Order.belongsToMany(Product, {through: 'order_product'});//N:M
+///Product table still has orderId might be Order.hasMany(product);
+///FILL IN PRICE OF order_products AFTER order is not 'cart'
+//SET DATE WHEN ORDER.status in ORDER TABLE is not 'cart'
 module.exports = {
   Category, OrderProduct, Order, Product, Review, User
 }
