@@ -1,15 +1,12 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
+//product ordered by customer
+
 const OrderProduct = db.define('order_product', {
-    // orderId: {
-    //     //foreign id
-    // },
-    // productId: {
-    //     //foreign id
-    // },
     quantity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false
     },
     price: {
         type: Sequelize.FLOAT,
@@ -17,6 +14,4 @@ const OrderProduct = db.define('order_product', {
     }
 })
 
-
 module.exports = OrderProduct;
-

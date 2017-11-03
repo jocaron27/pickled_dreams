@@ -52,5 +52,8 @@ Order.prototype.getTotal = function () {//Updates total price of order
         })
 }
 
+
+
+
 module.exports = Order;
 
