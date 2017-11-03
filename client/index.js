@@ -5,6 +5,7 @@ import {Provider} from 'react-redux'
 import store from './store'
 import Routes from './routes'
 import SingleProduct from './components/SingleProduct'
+import AllProducts from './components/allProducts'
 
 // establishes socket connection
 import './socket'
