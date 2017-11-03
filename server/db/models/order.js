@@ -18,21 +18,21 @@ const Order = db.define('order', {
     }
 
 })
-Order.prototype.hook = function () {
-    let quantity = 0;
-    afterUpdate({
-        where: {
-            status: {
-                $neq: 'cart'
-            }
-        }
-    })
-    // , OrderProduct.findById(this.id))
-    //     .then(function (orderProduct) {
-    // Product.findById(orderProduct.productId
-    //     })
-    // .then(foundProduct => foundProduct.update({ quantity_available: quantity_available }))
-}
+// Order.prototype.hook = function () {
+//     let quantity = 0;
+//     afterUpdate({
+//         where: {
+//             status: {
+//                 $neq: 'cart'
+//             }
+//         }
+//     })
+//     // , OrderProduct.findById(this.id))
+//     //     .then(function (orderProduct) {
+//     // Product.findById(orderProduct.productId
+//     //     })
+//     // .then(foundProduct => foundProduct.update({ quantity_available: quantity_available }))
+// }
 Order.prototype.delivered = function () { //changes status to delivered
     this.status = 'delivered';
     this.date = new Date();
