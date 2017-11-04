@@ -1,19 +1,12 @@
 import React, {Component} from 'react';
-import { render } from 'react-dom';
-
+import {connect} from 'react-redux'
 
 export default class OrderForm extends Component{
   constructor(){
     super()
-    this.state = {
-      address: '',
-      creditCard: ''
-    }
     this.handleSubmitOrder = this.handleSubmitOrder.bind(this);
   }
-  handleSubmitOrder(){//grabs info provided from form and makes the post request
-
-  }
+  handleSubmitOrder(){} //grabs info provided from form and makes the post request
 
   render(){
     return (

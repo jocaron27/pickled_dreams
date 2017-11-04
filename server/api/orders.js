@@ -38,6 +38,20 @@ router.get('/:id',(req,res,next) => {
 
 })
 
+///TEST ROUTE///
+router.get('/cart', (req,res,next) =>{
+    Order.findOne({
+        where: {
+            userId: 1,
+            status: 'cart'
+        },
+        include: [{model: 'Product'}]
+    })
+    .then(order => res.json(order))
+} )
+
+
+/////
 router.post('/', (req,res,next)=> {
   Order.create(req.body)
     .then(order => res.json(order))

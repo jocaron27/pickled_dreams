@@ -32,9 +32,15 @@ Category.belongsToMany(Product, {through: 'product_categories'});//N:M
 Order.hasMany(Product);//1:M
 Product.belongsToMany(Order, {through: 'order_product'});
 Order.belongsToMany(Product, {through: 'order_product'});//N:M
-///Product table still has orderId might be Order.hasMany(product);
-///FILL IN PRICE OF order_products AFTER order is not 'cart'
+///PRODUCT TABLE still has orderId might be Order.hasMany(product);
+
+///FILL IN PRICE OF ORDER_PRODUCTS TABLE AFTER order is not 'cart'
+
 //SET DATE WHEN ORDER.status in ORDER TABLE is not 'cart'
+///SET TOTAL AFTER ORDER IS CONFIRMED AS WELL in ORDER TABLE
+
+//LOOK INTO SESSIONS TABLE, MAYBE PUT CART OF NON-LOGIN USER on DATA possibly
+
 module.exports = {
   Category, OrderProduct, Order, Product, Review, User
 }

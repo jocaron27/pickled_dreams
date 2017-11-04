@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
+const { Product } = require('../db/models')
 module.exports = router
 
 
@@ -8,47 +8,47 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
     Product.findAll()
-    .then(products => res.json(products))
-    .catch(next)
+        .then(products => res.json(products))
+        .catch(next)
 })
 
-router.get('/:id',(req,res,next) => {
+router.get('/:id', (req, res, next) => {
     Product.findById(req.params.id)
-    .then(product => res.json(product))
-    .catch(next)
+        .then(product => res.json(product))
+        .catch(next)
 })
 
 
 // ONLY ADMIN CAN POST/EDIT/DELETE BELOW
 
-router.post('/', (req,res,next)=> {
-    if(req.user && req.user.isAdmin){
+router.post('/', (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
         Product.create(req.body)
-          .then(product => res.json(product))
-          .catch(next)
-    } else {
-        res.sendStatus(401)
-    }  
-})
-
-router.put('/:id', (req,res,next) => {
-    if(req.user && req.user.isAdmin){
-        Product.findById(req.params.id)
-          .then(product => product.update(req.body))
-          .then(product => res.json(product))
-          .catch(next)
+            .then(product => res.json(product))
+            .catch(next)
     } else {
         res.sendStatus(401)
     }
 })
 
-router.delete('/:id', (req,res,next)=>{
-    if(req.user && req.user.isAdmin){
+router.put('/:id', (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
+        Product.findById(req.params.id)
+            .then(product => product.update(req.body))
+            .then(product => res.json(product))
+            .catch(next)
+    } else {
+        res.sendStatus(401)
+    }
+})
+
+router.delete('/:id', (req, res, next) => {
+    if (req.user && req.user.isAdmin) {
         Product.findById(req.params.id)
             .then(product => product.destroy())
             .then(res.sendStatus(200))
             .catch(next)
-    }else{
+    } else {
         res.sendStatus(401)
     }
 })
