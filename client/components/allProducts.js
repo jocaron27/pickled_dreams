@@ -1,35 +1,47 @@
-import React from "react";
-import { Link } from "react-router-dom";
-// import { fetchProducts } from "../store/products";
+import React, { Component } from "react";
+import { NavLink, Link } from "react-router-dom";
+import { fetchProducts } from "../store/products";
 import { connect } from "react-redux";
+import { Router } from "react-router";
+import { Route, Switch } from "react-router-dom";
+import SingleProduct from "./SingleProduct";
 
-function AllProducts(props) {
-  const { products } = props;
-  return (
-    <div className="main">
-      <div>
-        <h1>Welcome!</h1>
-      </div>
-      <div className="product-list" key={products.id}>
-        {products.map(product => {
-          return (
-            <div key={product.id}>
-              <div className="product-title">{product.title}</div>
-              <Link to={`/products/${product.id}`} className="list-link">
-                <div className="product">
-                  <img src={product.photo} width="200px" />
+class AllProducts extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    const { products } = this.props;
+    return (
+      <div className="main">
+        <div>
+          <h1>Welcome!</h1>
+        </div>
+        <div className="product-list" key={products.id}>
+          {products.map(product => {
+            return (
+              <div key={product.id}>
+                <div className="product-title">{product.title}</div>
+                <Link to={`/products/${product.id}`} className="list-link">
+                  <div className="product">
+                    <img src={product.photo} width="200px" />
+                  </div>
+                </Link>
+                <div className="item-price">
+                  <span>${product.price}</span>
+                  <button className="btn btn-default">Add To Cart</button>
                 </div>
-              </Link>
-              <div className="item-price">
-                <span>${product.price}</span>
-                <button className="btn btn-default">Add To Cart</button>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+          <div className="item-price">
+            <span>${product.price}</span>
+            <button className="btn btn-default">Add To Cart</button>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 function mapStateToProps(state) {

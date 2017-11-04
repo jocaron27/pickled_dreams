@@ -20,8 +20,7 @@ export function fetchProducts() {
   return function thunk(dispatch) {
     return axios
       .get("api/products")
-      .then(res => res.data)
-      .then(products => dispatch(getProducts(products)))
+      .then(res => dispatch(getProducts(res.data)))
       .catch(console.err);
   };
 }

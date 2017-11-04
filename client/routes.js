@@ -4,6 +4,7 @@ import { Router } from "react-router";
 import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import history from "./history";
+
 import {
   Main,
   Login,
@@ -11,8 +12,10 @@ import {
   UserHome,
   AllProducts,
   ShoppingCart,
+  SingleProduct,
   WriteReview
 } from "./components";
+
 import { me } from "./store";
 import { fetchProducts } from "./store/products";
 
@@ -35,7 +38,10 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
+            <Route exact path="/" component={AllProducts} />
+            <Route exact path="/home" component={AllProducts} />
             <Route exact path="/products" component={AllProducts} />
+            <Route exact path="/products/:id" component={SingleProduct} />
             <Route exact path="/shopping-cart" component={ShoppingCart} />
             <Route exact path="/write-review" component={WriteReview} />
             {isLoggedIn && (
@@ -60,7 +66,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    products: state.products
   };
 };
 
@@ -82,5 +89,6 @@ export default connect(mapState, mapDispatch)(Routes);
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
+  loadProducts: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };

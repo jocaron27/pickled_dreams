@@ -23,7 +23,7 @@ export function writeReviewTitle(title) {
 export function writeReviewContent(content) {
   return { type: WRITE_REVIEW_CONTENT, content };
 }
-export function WriteReviewRating(rating) {
+export function writeReviewRating(rating) {
   return { type: NEW_RATING, rating };
 }
 export function addReview(review) {
