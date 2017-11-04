@@ -1,75 +1,54 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import fetchProduct from '../store/product';
 
-class SingleProduct extends Component {
-    constructor(props) {
-        super(props)
-    }
+function SingleProduct(props) {
+    const { products, productId } = props;
+    let product;
+    (products.length) ? product = products.find(singleProduct => singleProduct.id === productId) : product = {photo: '', title: '', description: '', price: 0.0, quantityAvailable: 0}
 
-    componentDidMount() {
-        this.props.getCurrentProduct();
-    }
-
-    render() {
-    const { product } = this.props;
-
-    let actualQuantity = product.quantityAvailable || 0;
+    let actualQuantity = product.quantityAvailable;
     let displayedQuantity;
     (actualQuantity < 25) ? displayedQuantity = actualQuantity : displayedQuantity = 25;
 
-    let select = <select className="single-product-quantity" />
+    let selectDiv = document.createElement("div");
+    let select = document.createElement("select");
+    select.className = "single-product-select"
+    selectDiv.appendChild(select);
+
+    let options = [];
+
     for (let i = 1; i < displayedQuantity; i++){
-        select.appendChild(<option value={i}>i</option>)
+        options.push(<option value={i}>{i}</option>)
     }
 
-    if (!actualQuantity) {
         return (
             <div className="single-product">
-                <h1>Hello</h1>
-                <img src={product.photo} />
+                <img src={product.photo} width="400px" />
                 <div className="-single-product-title">{product.title}</div>
                 <div className="single-product-description">{product.description}</div>
                 <div className="single-product-price">${product.price}</div>
-                <div className="single-product-none">Sorry, this product is out of stock.</div>
+                {(product.quantityAvailable) ? <select>{options.map(option => option)}</select> : <div>"Sorry, this item is out of stock"</div>}
             </div>
-        );
-    } else {
-        return (
-            <div className="single-product">
-                <img src={product.photo} />
-                <div className="-single-product-title">{product.title}</div>
-                <div className="single-product-description">{product.description}</div>
-                <div className="single-product-price">${product.price}</div>
-                <form>
-                {select}
-                <input type="submit" className="add-cart-button" value="Add to Cart" />
-            </form>
-            </div>
-        );
-    }
-}
+    );
 }
 
-const mapStateToProps = function(state) {
+// {(product.quantityAvailable) ? (
+//     <form>
+//     {select}
+//     <input type="submit" className="add-cart-button" value="Add to Cart" />
+//     </form>) : <div className="single-product-none">Sorry, this product is out of stock.</div>}
+
+const mapStateToProps = function(state, ownProps) {
+    const productId = Number(ownProps.match.params.id)
     return {
-        product: state.product || {photo: '', title: '', description: '', price: 0.00, quantityAvailable: 0}
+        products: state.products || [],
+        productId: productId
     }
 };
 
-const mapDispatchToProps = function(dispatch, ownProps) {
-    const productId = Number(ownProps.match.params.id)
-    return {
-        getCurrentProduct: function() {
-            dispatch(fetchProduct(productId));
-        }
-    }
-}
-
 //need submit handler
 
-const LoadProduct = connect(mapStateToProps, mapDispatchToProps)(SingleProduct);
+const LoadProduct = connect(mapStateToProps)(SingleProduct);
 
 export default LoadProduct;
 

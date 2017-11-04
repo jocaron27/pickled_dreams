@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { fetchProducts } from '../store/products'
 import {connect} from 'react-redux'
+import {Router} from 'react-router'
+import {Route, Switch} from 'react-router-dom'
+import SingleProduct from './SingleProduct'
 
 
     class AllProducts extends Component {
@@ -17,7 +20,7 @@ import {connect} from 'react-redux'
                 <Link to="/new-product"><button className="button-main"><span className="glyphicon glyphicon-plus" />Add Product</button></Link>
             </div>
             <div className="campus-list">
-                {products.map(product => {
+                {products.length && products.map(product => {
                     return (
                     <Link to={`/products/${product.id}`} key={product.id} className="list-link">
                         <div className="product">

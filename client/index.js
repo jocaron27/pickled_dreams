@@ -6,9 +6,12 @@ import store from './store'
 import Routes from './routes'
 import SingleProduct from './components/SingleProduct'
 import AllProducts from './components/allProducts'
+import fetchProducts from './store/products'
 
 // establishes socket connection
 import './socket'
+
+store.dispatch(fetchProducts)
 
 ReactDOM.render(
   <Provider store={store}>
