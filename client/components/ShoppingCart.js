@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import {connect} from 'react-redux'
 
-export function ShoppingCart (props){
+export default function ShoppingCart (props){
 
     // NEED FROM STORE: 
             // 1) ARRAY OF ITEMS THAT ARE IN USER'S CART
