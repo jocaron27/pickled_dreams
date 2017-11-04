@@ -1,24 +1,32 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Router} from 'react-router'
-import {Route, Switch} from 'react-router-dom'
-import PropTypes from 'prop-types'
-import history from './history'
-import {Main, Login, Signup, UserHome, AllProducts, ShoppingCart} from './components'
-import {me} from './store'
-import { fetchProducts } from './store/products'
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Router } from "react-router";
+import { Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
+import history from "./history";
+import {
+  Main,
+  Login,
+  Signup,
+  UserHome,
+  AllProducts,
+  ShoppingCart,
+  WriteReview
+} from "./components";
+import { me } from "./store";
+import { fetchProducts } from "./store/products";
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount () {
-    this.props.loadInitialData()
-    this.props.loadProducts()
+  componentDidMount() {
+    this.props.loadInitialData();
+    this.props.loadProducts();
   }
 
-  render () {
-    const {isLoggedIn} = this.props
+  render() {
+    const { isLoggedIn } = this.props;
 
     return (
       <Router history={history}>
@@ -27,47 +35,47 @@ class Routes extends Component {
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route exact path='/products' component={AllProducts} />
-            <Route exact path='/shopping-cart' component={ShoppingCart}/>
-            {
-              isLoggedIn &&
-                <Switch>
-                  {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
-                </Switch>
-            }
+            <Route exact path="/products" component={AllProducts} />
+            <Route exact path="/shopping-cart" component={ShoppingCart} />
+            <Route exact path="/write-review" component={WriteReview} />
+            {isLoggedIn && (
+              <Switch>
+                {/* Routes placed here are only available after logging in */}
+                <Route path="/home" component={UserHome} />
+              </Switch>
+            )}
             {/* Displays our Login component as a fallback */}
             <Route component={Login} />
           </Switch>
         </Main>
       </Router>
-    )
+    );
   }
 }
 
 /**
  * CONTAINER
  */
-const mapState = (state) => {
+const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id
-  }
-}
+  };
+};
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = dispatch => {
   return {
-    loadInitialData () {
-      dispatch(me())
+    loadInitialData() {
+      dispatch(me());
     },
-    loadProducts () {
-      dispatch(fetchProducts())
+    loadProducts() {
+      dispatch(fetchProducts());
     }
-  }
-}
+  };
+};
 
-export default connect(mapState, mapDispatch)(Routes)
+export default connect(mapState, mapDispatch)(Routes);
 
 /**
  * PROP TYPES
@@ -75,4 +83,4 @@ export default connect(mapState, mapDispatch)(Routes)
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
-}
+};
