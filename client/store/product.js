@@ -20,7 +20,7 @@
 //  */
 // export const fetchProduct = (id) =>
 //   dispatch =>
-//     axios.get(`api/products/${id}`)
+//     axios.get(`/api/products/${id}`)
 //       .then(res => dispatch(getProduct(res.data)))
 //       .catch(err => console.log(err))
 

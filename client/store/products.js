@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 
 //initial state
 
-const initialState = []
+const initialState = [];
 
 //ACTIONS
 
@@ -11,28 +11,29 @@ const GET_PRODUCTS = "GET_PRODUCTS";
 //ACTION CREATORS
 
 export function getProducts(products) {
-    return {type: GET_PRODUCTS, products}
+  return { type: GET_PRODUCTS, products };
 }
 
-//THUNK 
+//THUNK
 
 export function fetchProducts() {
-    return function thunk(dispatch) {
-        return axios.get('api/products')
-            .then(res => dispatch(getProducts(res.data)))
-            .catch(console.err)
-    }
+  return function thunk(dispatch) {
+    return axios
+      .get("/api/products")
+      .then(res => dispatch(getProducts(res.data)))
+      .catch(console.err);
+  };
 }
 
 //Reducer
 
 const reducer = function(state = initialState, action) {
-    switch(action.type) {
-        case GET_PRODUCTS:
-            return action.products
-        default:
-            return state
-    }
-}
+  switch (action.type) {
+    case GET_PRODUCTS:
+      return action.products;
+    default:
+      return state;
+  }
+};
 
 export default reducer;
