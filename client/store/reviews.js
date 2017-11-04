@@ -37,20 +37,20 @@ export function getReviews(reviews) {
 export function fetchReviews(id) {
   return function thunk(dispatch) {
     return axios
-      .get(`api/reviews/${id}`)
+      .get(`/api/reviews/${id}`)
       .then(res => res.data)
       .then(allReviews => dispatch(getReviews(allReviews)));
   };
 }
 
-export function createReview(review, history) {
+export function createReview(review, id, history) {
   return function thunk(dispatch) {
     return axios
-      .post("api/reviews", review)
+      .post(`/api/reviews/${id}`, review)
       .then(res => res.data)
       .then(newReview => {
         dispatch(addReview(newReview));
-        // history.push(`/reviews/${newReview.id}`);
+        //history.push(`/reviews/${newReview.id}`);
       });
   };
 }

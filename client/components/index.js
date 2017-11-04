@@ -8,4 +8,5 @@ export { default as UserHome } from "./user-home";
 export { default as AllProducts } from "./allProducts";
 export { default as ShoppingCart } from "./ShoppingCart";
 export { default as WriteReview } from "./reviewForm";
+export { default as SingleProduct } from "./SingleProduct";
 export { Login, Signup } from "./auth-form";

@@ -4,14 +4,13 @@ module.exports = router;
 
 // ('api/reviews...')
 
-router.post("/", (req, res, next) => {
-  console.log(req.body);
+router.post("/:id", (req, res, next) => {
   if (req.user) {
     Review.create({
       rating: req.body.rating,
       review_text: req.body.content,
       userId: req.user.id,
-      productId: 1 ///Change THIS
+      productId: req.params.id ///Change THIS
     })
       .then(review => res.json(review))
       .catch(next);
