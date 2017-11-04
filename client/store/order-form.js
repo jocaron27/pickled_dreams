@@ -8,7 +8,14 @@ const WRITE_CCN = 'WRITE_CCN';
 const WRITE_CVC = 'WRITE_CVC';
 const SUBMIT_ORDER = 'SUBMIT_ORDER';
 
-const initialState = {}
+const initialState = {
+  address: "",
+  city: "",
+  stateOfCity: "",
+  zipCode: "",
+  ccn: "",
+  cvc: ""
+}
 
 export function writeAddress(address) {
   const action = { type: WRITE_ADDRESS, address };
@@ -34,18 +41,18 @@ export function writeCVC(cvc) {
   const action = { type: WRITE_CVC, cvc };
   return action;
 }
-export function submitOrder(order){
-  const action = {type: SUBMIT_ORDER, order};
+export function submitOrder(order) {
+  const action = { type: SUBMIT_ORDER, order };
   return action;
 }
 ///THUNK CREATOR/// 
-export function submitOrderThunk(id, order){
-  return function thunk (dispatch){
+export function submitOrderThunk(id, order) {
+  return function thunk(dispatch) {
     return axios.post(`/api/orders/${id}`, order)
   }
 }
 
-const reducer = function(state = initialState, action) {
+const reducer = function (state = initialState, action) {
 
   switch (action.type) {
     case WRITE_ADDRESS:
