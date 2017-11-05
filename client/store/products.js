@@ -17,20 +17,12 @@ export function getProducts(products) {
 //THUNK
 
 export function fetchProducts() {
-<<<<<<< HEAD
-    return function thunk(dispatch) {
-        return axios.get('/api/products')
-            .then(res => dispatch(getProducts(res.data)))
-            .catch(console.err)
-    }
-=======
   return function thunk(dispatch) {
     return axios
       .get("/api/products")
       .then(res => dispatch(getProducts(res.data)))
       .catch(console.err);
   };
->>>>>>> master
 }
 
 //Reducer
