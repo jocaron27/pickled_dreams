@@ -1,0 +1,12 @@
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.product-container {
+    flex-grow: 1.5;
+    width: 20vw;
+    margin: 15px;
+    border: 2px solid black;
+    padding: 7px;
+}

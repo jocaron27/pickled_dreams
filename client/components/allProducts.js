@@ -20,7 +20,7 @@ class AllProducts extends Component {
         <div className="product-list" key={products.id}>
           {products.map(product => {
             return (
-              <div key={product.id}>
+              <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
                 <Link to={`/products/${product.id}`} className="list-link">
                   <div className="product">
@@ -33,10 +33,6 @@ class AllProducts extends Component {
                 </div>
               </div>
             );
-            <div className="item-price">
-              <span>${product.price}</span>
-              <button className="btn btn-default">Add To Cart</button>
-            </div>;
           })}
         </div>
       </div>
