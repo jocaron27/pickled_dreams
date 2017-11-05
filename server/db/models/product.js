@@ -20,7 +20,7 @@ const Product = db.define('product', {
       },
       photo: {
         type: Sequelize.TEXT,
-        default: ''
+        defaultValue: '/gray.png'
       }
 })
 ///Products will have to belongtoMany Categories and vice-versa
