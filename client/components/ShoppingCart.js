@@ -1,44 +1,57 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import {connect} from 'react-redux'
+function ShoppingCart({ orders, orderProducts, products }) {
 
-export default function ShoppingCart (props){
+  let order = orders.find(order => order.status === 'cart');
 
-    // NEED FROM STORE: 
-            // 1) ARRAY OF ITEMS THAT ARE IN USER'S CART
-            // 2) INDIVIDUAL ITEM'S TITLE
-            // 3) INDIVIDUAL ITEM'S QUANTITY THAT'S INSIDE ShoppingCart
-            // 4) TOTAL PRICE OF ALL ITEMS COMBINED IN CART COMES FROM ORDERS.TOTAL
+  let orderId;
 
+  order ? orderId = order.id : orderId = null;
 
-    return (
-        <div>
-            <h1>Shopping Cart</h1>
+  const actualOrder = orderProducts.filter(order => order.orderId === orderId);
 
-            <div id="shoppingcart-all-items">
-                <h3>All Items In Cart:</h3>    
-                <ul>
-                {/****** MAP OVER EACH ITEM IN CART *******/}
-                    { orderListOfItems.map(item => {
-                            return (
-                                <li className="shoppingcart-single-item">
-                                    <a href="#">
-                                        <img className="media-object" src={ item.photo }/>
-                                    </a>
-                                    <h3>{ item.title }</h3>
-                                    <p>Qty: { item.quantity }</p>
-                                </li>
-                            )
-                        })
-                    }
-                </ul>
-            </div>
+  return (
+    <div>
+      <h1>Shopping Cart</h1>
 
-            <div>
-                <h3>Subtotal: $ {orderListOfItems.totalPrice}</h3>
-                <button onClick={move.to.shoppingcart.page}>Proceed to Checkout</button>
-            </div>
-        </div>
-    )
+      <div id="shoppingcart-all-items">
+        <h3>All Items In Cart:</h3>
+        <ul>
+          {actualOrder.map((item, index) => {
+            let product = products.filter(product => product.id === item.productId)[0]
+            return (
+              <li key={index} className="shoppingcart-single-item">
+                <Link to={`/products/${item.productId}`}>
+                  <img className="media-object" src={product.photo} width="50px" />
+                </Link>
+                <h3>{product.title}</h3>
+                <p>Qty: {item.quantity}</p>
+                <hr />
+              </li>
+            )
+          })
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3>Subtotal: $ {orders.total}</h3>
+        <button>Proceed to Checkout</button>
+      </div>
+    </div>
+  )
+
 }
+
+function mapStateToProps(state) {
+  return {
+    orders: state.orders,
+    orderProducts: state.orderProducts,
+    products: state.products
+  }
+}
+
+export default connect(mapStateToProps)(ShoppingCart)
 

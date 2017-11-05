@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 function SingleProduct(props) {
     const { products, productId } = props;
+    console.log('this.props ', this.props);
     let product;
+    console.log('props: ', props);
     (products.length) ? product = products.find(singleProduct => singleProduct.id === productId) : product = {photo: '', title: '', description: '', price: 0.0, quantityAvailable: 0}
 
     let actualQuantity = product.quantityAvailable;

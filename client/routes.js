@@ -8,7 +8,9 @@ import history from './history'
 import {Main, Login, Signup, UserHome, AllProducts, ShoppingCart, SingleProduct} from './components'
 
 import {me} from './store'
-import { fetchProducts } from './store/products'
+import { fetchProducts } from './store/products';
+import { fetchOrders } from './store/orders';
+import { fetchOrderProduct } from './store/order_products'
 
 /**
  * COMPONENT
@@ -17,6 +19,8 @@ class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
     this.props.loadProducts()
+    this.props.loadOrders()
+    this.props.loadOrderProducts()
   }
 
   render () {
@@ -32,7 +36,7 @@ class Routes extends Component {
             <Route exact path="/" component={AllProducts} />
             <Route exact path="/home" component={AllProducts} />
             <Route exact path="/products" component={AllProducts} />
-            <Route exact path="/products/:id" component={SingleProduct} />
+            <Route exact path="/products/:id" render={(props) => <SingleProduct {...props} />} />
             <Route exact path='/shopping-cart' component={ShoppingCart}/>
 
             {
@@ -59,7 +63,9 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    products: state.products
+    products: state.products,
+    orders: state.orders,
+    order_products: state.orderProducts
   }
 }
 
@@ -70,6 +76,12 @@ const mapDispatch = (dispatch) => {
     },
     loadProducts () {
       dispatch(fetchProducts())
+    },
+    loadOrders () {
+      dispatch(fetchOrders())
+    },
+    loadOrderProducts(){
+      dispatch(fetchOrderProduct())
     }
   }
 }
@@ -82,5 +94,7 @@ export default connect(mapState, mapDispatch)(Routes)
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   loadProducts: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  loadOrders: PropTypes.func.isRequired,
+  loadOrderProducts: PropTypes.func.isRequired
 }
