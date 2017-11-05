@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
-import { fetchProducts } from "../store/products";
-import { connect } from "react-redux";
-import { Router } from "react-router";
-import { Route, Switch } from "react-router-dom";
-import SingleProduct from "./SingleProduct";
+import React, { Component } from 'react';
+import { NavLink, Link } from 'react-router-dom';
+import { fetchProducts } from '../store/products';
+import { connect } from 'react-redux';
+import { Router } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
+import SingleProduct from './SingleProduct';
 
 class AllProducts extends Component {
   constructor(props) {

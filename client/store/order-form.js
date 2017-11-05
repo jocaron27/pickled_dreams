@@ -9,12 +9,12 @@ const WRITE_CVC = 'WRITE_CVC';
 const SUBMIT_ORDER = 'SUBMIT_ORDER';
 
 const initialState = {
-  address: "",
-  city: "",
-  stateOfCity: "",
-  zipCode: "",
-  ccn: "",
-  cvc: ""
+  address: '',
+  city: '',
+  stateOfCity: '',
+  zipCode: '',
+  ccn: '',
+  cvc: ''
 }
 
 export function writeAddress(address) {
@@ -45,7 +45,7 @@ export function submitOrder(order) {
   const action = { type: SUBMIT_ORDER, order };
   return action;
 }
-///THUNK CREATOR/// 
+///THUNK CREATOR///
 export function submitOrderThunk(id, order) {
   return function thunk(dispatch) {
     return axios.post(`/api/orders/${id}`, order)
