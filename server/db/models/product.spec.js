@@ -8,6 +8,7 @@ describe('Product model', () => {
   beforeEach(() => {
     return db.sync({force: true})
   })
+  afterEach('Clear tables', () => db.truncate({cascade: true}))
 
   describe('Creating new product object', () => {
  
@@ -18,12 +19,12 @@ describe('Product model', () => {
           title: 'Automagic',
           description: 'When everything goes right, but you have no idea how',
           price: 9.99,
-          available_quantity: 50,
+          quantityAvailable: 50,
           photo: '/.public/images/img_123'
         })
-          .then(product => {
-            newItem = product
-          })
+        .then(product => {
+          newItem = product
+        })
       })
 
       it('returns an object', () => {
