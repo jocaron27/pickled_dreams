@@ -9,16 +9,10 @@ import { getSearch } from "../store/products";
 class AllProducts extends Component {
   constructor(props) {
     super(props);
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  handleInputChange(event) {
-    event.preventDefault();
-    this.props.handleInputValue(event.target.children[0].value);
   }
 
   render() {
-    const { products, inputValue } = this.props;
+    const { products, inputValue, handleInputChange } = this.props;
     const filteredProds = products.filter(product => {
       return product.title.toLowerCase().match(inputValue) ||
         product.title.toUpperCase().match(inputValue) ||
@@ -31,7 +25,7 @@ class AllProducts extends Component {
         <form
           className="form-group"
           style={{ marginTop: "20px" }}
-          onSubmit={this.handleInputChange}
+          onSubmit={handleInputChange}
         >
           <input
             className="list-group"
@@ -75,7 +69,9 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
   return {
-    handleInputValue(searchParam) {
+    handleInputChange(event) {
+      event.preventDefault();
+      const searchParam = event.target.children[0].value;
       dispatch(getSearch(searchParam));
     }
   };
