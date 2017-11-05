@@ -17,6 +17,7 @@ import {
 
 import { me } from "./store";
 import { fetchProducts } from "./store/products";
+import { fetchReviews } from "./store/reviews";
 
 /**
  * COMPONENT
@@ -25,6 +26,7 @@ class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
     this.props.loadProducts();
+    this.props.loadReviews();
   }
 
   render() {
@@ -65,7 +67,8 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    products: state.products
+    products: state.products,
+    reviews: state.allReviews
   };
 };
 
@@ -76,6 +79,9 @@ const mapDispatch = dispatch => {
     },
     loadProducts() {
       dispatch(fetchProducts());
+    },
+    loadReviews() {
+      dispatch(fetchReviews());
     }
   };
 };
@@ -88,5 +94,6 @@ export default connect(mapState, mapDispatch)(Routes);
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   loadProducts: PropTypes.func.isRequired,
+  loadReviews: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };

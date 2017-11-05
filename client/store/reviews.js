@@ -1,8 +1,8 @@
 import axios from "axios";
 
 //InitialState
-const intialState = {
-  allReviews: {},
+const initialState = {
+  allReviews: [],
   newReviewTitle: "",
   newReviewContent: "",
   newReviewRating: 0
@@ -34,10 +34,10 @@ export function getReviews(reviews) {
 }
 
 //Thunk
-export function fetchReviews(id) {
+export function fetchReviews() {
   return function thunk(dispatch) {
     return axios
-      .get(`/api/reviews/${id}`)
+      .get('/api/reviews/')
       .then(res => res.data)
       .then(allReviews => dispatch(getReviews(allReviews)));
   };
@@ -66,7 +66,9 @@ const reducer = function(state = initialState, action) {
         newReviewContent: action.content
       });
     case NEW_RATING:
-      return action.rating;
+      return Object.assign({}, state, {
+        newReviewRating: action.rating
+      });
     case ADD_REVIEW:
       return Object.assign({}, state, {
         allReviews: [...state.allReviews, action.review]
