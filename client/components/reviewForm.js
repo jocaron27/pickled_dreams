@@ -106,9 +106,9 @@ const mapDispatchToProps = function(dispatch, ownProps) {
       dispatch(
         createReview({ content, rating }, ownProps.productId, ownProps.history)
       );
-      dispatch(writeReviewTitle(""));
-      dispatch(writeReviewContent(""));
-      dispatch(writeReviewRating(0));
+        dispatch(writeReviewTitle(""));
+        dispatch(writeReviewContent(""));
+        dispatch(writeReviewRating(0));
     }
   };
 };

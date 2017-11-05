@@ -3,6 +3,11 @@ const { Review } = require("../db/models");
 module.exports = router;
 
 // ('api/reviews...')
+router.get("/", (req, res, next) => {
+    Review.findAll()
+      .then(reviews => res.json(reviews))
+      .catch(next);
+});
 
 router.post("/:id", (req, res, next) => {
   if (req.user) {

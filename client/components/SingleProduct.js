@@ -4,7 +4,7 @@ import WriteReview from "./reviewForm";
 import { Link } from "react-router";
 
 function SingleProduct(props) {
-  const { products, productId } = props;
+  const { products, productId, reviews } = props;
   let product;
   products.length
     ? (product = products.find(singleProduct => singleProduct.id === productId))
@@ -50,22 +50,26 @@ function SingleProduct(props) {
           <div>"Sorry, this item is out of stock"</div>
         )}
         <WriteReview productId={props.productId} />
+        <div><h2>Reviews</h2></div>
+        {reviews.filter(review => review.productId === productId).map(review => {
+          return(
+            <div key={review.id}>
+              <div>{review.rating}</div>
+              <div>{review.review_text}</div>
+            </div>
+          )}
+        )}
       </div>
     </div>
   );
 }
 
-// {(product.quantityAvailable) ? (
-//     <form>
-//     {select}
-//     <input type="submit" className="add-cart-button" value="Add to Cart" />
-//     </form>) : <div className="single-product-none">Sorry, this product is out of stock.</div>}
-
 const mapStateToProps = function(state, ownProps) {
   const productId = Number(ownProps.match.params.id);
   return {
     products: state.products || [],
-    productId: productId
+    productId: productId,
+    reviews: state.reviews.allReviews
   };
 };
 
