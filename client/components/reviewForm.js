@@ -86,15 +86,12 @@ const mapStateToProps = function(state) {
 const mapDispatchToProps = function(dispatch, ownProps) {
   return {
     handleChangeTitle(event) {
-      console.log("this is title ", event.target.value);
       dispatch(writeReviewTitle(event.target.value));
     },
     handleChangeContent(event) {
-      console.log("change content", event.target.value);
       dispatch(writeReviewContent(event.target.value));
     },
     handleChangeRating(event) {
-      console.log("change rating", event.target.value);
       dispatch(writeReviewRating(event.target.value));
     },
     handleSubmit(event) {
@@ -106,9 +103,9 @@ const mapDispatchToProps = function(dispatch, ownProps) {
       dispatch(
         createReview({ content, rating }, ownProps.productId, ownProps.history)
       );
-        dispatch(writeReviewTitle(""));
-        dispatch(writeReviewContent(""));
-        dispatch(writeReviewRating(0));
+      dispatch(writeReviewTitle(""));
+      dispatch(writeReviewContent(""));
+      dispatch(writeReviewRating(0));
     }
   };
 };
