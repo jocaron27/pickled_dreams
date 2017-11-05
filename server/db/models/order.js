@@ -15,6 +15,10 @@ const Order = db.define('order', {
     total: {
         type: Sequelize.DECIMAL(10, 2),
         defaultValue: 0.0
+    },
+    shippingAddress: {
+        type: Sequelize.STRING,
+        defaultValue: null
     }
 
 })

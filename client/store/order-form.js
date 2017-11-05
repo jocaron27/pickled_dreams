@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 const WRITE_ADDRESS = 'WRITE_ADDRESS';
 const WRITE_CITY = 'WRITE_CITY';
 const WRITE_STATE = 'WRITE_STATE';
@@ -46,7 +45,7 @@ export function submitOrder(order) {
   return action;
 }
 ///THUNK CREATOR///
-export function submitOrderThunk(id, order) {
+export function submitOrder(id, order) {
   return function thunk(dispatch) {
     return axios.post(`/api/orders/${id}`, order)
   }
