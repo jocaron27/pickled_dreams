@@ -8,7 +8,8 @@ import orders from './orders'
 import orderProducts from './order_products'
 import reviews from './reviews'
 import orderForm from './order-form';
-const reducer = combineReducers({ user, products, orders, orderProducts, reviews, orderForm })
+import category from './categories';
+const reducer = combineReducers({ user, products, orders, orderProducts, reviews, orderForm, category })
 
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -23,3 +24,4 @@ export * from './orders'
 export * from './order_products'
 export * from './reviews'
 export * from './order-form'
+export * from './categories'

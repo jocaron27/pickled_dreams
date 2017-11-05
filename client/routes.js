@@ -20,6 +20,7 @@ import { fetchProducts } from "./store/products";
 import { fetchReviews } from "./store/reviews";
 import { fetchOrders } from "./store/orders";
 import { fetchOrderProduct } from "./store/order_products"
+import { fetchCategories } from "./store/categories"
 
 /**
  * COMPONENT
@@ -31,6 +32,7 @@ class Routes extends Component {
     this.props.loadOrders()
     this.props.loadOrderProducts()
     this.props.loadReviews();
+    this.props.loadCategories();
   }
 
   render() {
@@ -74,7 +76,8 @@ const mapState = state => {
     products: state.products,
     orders: state.orders,
     order_products: state.orderProducts,
-    reviews: state.allReviews
+    reviews: state.allReviews,
+    categories: state.categories
   };
 };
 
@@ -86,10 +89,13 @@ const mapDispatch = dispatch => {
     loadProducts() {
       dispatch(fetchProducts());
     },
-    loadOrders () {
+    loadCategories() {
+      dispatch(fetchCategories());
+    },
+    loadOrders() {
       dispatch(fetchOrders());
     },
-    loadOrderProducts(){
+    loadOrderProducts() {
       dispatch(fetchOrderProduct())
     },
     loadReviews() {
@@ -108,6 +114,7 @@ Routes.propTypes = {
   loadProducts: PropTypes.func.isRequired,
   loadOrders: PropTypes.func.isRequired,
   loadOrderProducts: PropTypes.func.isRequired,
+  loadCategories: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };
