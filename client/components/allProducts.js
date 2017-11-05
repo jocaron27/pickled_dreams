@@ -9,9 +9,13 @@ import SingleProduct from "./SingleProduct";
 class AllProducts extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      categories: []
+    };
   }
   render() {
     const { products } = this.props;
+    console.log(products);
     return (
       <div className="main">
         <div>
@@ -33,10 +37,6 @@ class AllProducts extends Component {
                 </div>
               </div>
             );
-            <div className="item-price">
-              <span>${product.price}</span>
-              <button className="btn btn-default">Add To Cart</button>
-            </div>;
           })}
         </div>
       </div>
