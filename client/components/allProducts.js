@@ -9,9 +9,6 @@ import SingleProduct from "./SingleProduct";
 class AllProducts extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      categories: []
-    };
   }
   render() {
     const { products } = this.props;
