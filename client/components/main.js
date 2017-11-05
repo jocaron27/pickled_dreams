@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
+import AllProducts from './allProducts'
 
 /**
  * COMPONENT
@@ -10,12 +11,14 @@ import {logout} from '../store'
  *  else common to our entire app. The 'picture' inside the frame is the space
  *  rendered out by the component's `children`.
  */
+
+
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
 
   return (
     <div>
-      <h1>BOILERMAKER</h1>
+      <h1>Pickled Dreams</h1>
       <nav>
         {
           isLoggedIn
@@ -30,6 +33,7 @@ const Main = (props) => {
               <Link to="/signup">Sign Up</Link>
             </div>
         }
+        <Link to='/shopping-cart'><button className="btn btn-default"> Cart</button></Link>
       </nav>
       <hr />
       {children}
