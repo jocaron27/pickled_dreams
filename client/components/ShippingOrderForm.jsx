@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {} from '../store/order-form';
+import { } from '../store/order-form';
 
 
 
@@ -41,7 +41,7 @@ class OrderForm extends Component {
 }
 function mapStateToProps(state) {
   return {
-    products: state.products,
+    orderForm: state.orderForm,
     categories: state.category.categories,
     selectedCategory: state.category.selectedCategory
   };
@@ -49,7 +49,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    handleCategory(category) {
+    handleOrderSubmission(category) {
       dispatch(getCategory(category))
     }
   }
