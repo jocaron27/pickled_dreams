@@ -1,24 +1,45 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
-import { fetchProducts } from "../store/products";
 import { connect } from "react-redux";
 import { Router } from "react-router";
 import { Route, Switch } from "react-router-dom";
 import SingleProduct from "./SingleProduct";
+import { getSearch } from "../store/products";
 
 class AllProducts extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
-    const { products } = this.props;
+    const { products, inputValue, handleInputChange } = this.props;
+    const filteredProds = products.filter(product => {
+      return product.title.toLowerCase().match(inputValue) ||
+        product.title.toUpperCase().match(inputValue) ||
+        inputValue === ""
+        ? true
+        : false;
+    });
     return (
       <div className="main">
+        <form
+          className="form-group"
+          style={{ marginTop: "20px" }}
+          onSubmit={handleInputChange}
+        >
+          <input
+            className="list-group"
+            placeholder="search product"
+            type="text"
+            name="product-search"
+          />
+          <button type="submit">Search</button>
+        </form>
         <div>
           <h1>Welcome!</h1>
         </div>
         <div className="product-list" key={products.id}>
-          {products.map(product => {
+          {filteredProds.map(product => {
             return (
               <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
@@ -42,8 +63,17 @@ class AllProducts extends Component {
 
 function mapStateToProps(state) {
   return {
-    products: state.products
+    products: state.products.allProducts,
+    inputValue: state.products.inputValue
   };
 }
-
-export default connect(mapStateToProps)(AllProducts);
+function mapDispatchToProps(dispatch) {
+  return {
+    handleInputChange(event) {
+      event.preventDefault();
+      const searchParam = event.target.children[0].value;
+      dispatch(getSearch(searchParam));
+    }
+  };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
