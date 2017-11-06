@@ -5,21 +5,6 @@ const { OrderProduct, Order, Product } = require('../db/models')
 
 module.exports = router
 
-
-// ('api/order_products...')
-// router.get('/cart', (req, res, next) => {
-//     if (req.user) {
-//         Order.findOne({
-//             where: {
-//                 userId: req.user.id,
-
-//             .then(order => res.json(order))
-//             .catch(next)
-//     } else {
-//         next();
-//     }
-
-// })
 router.get('/', (req, res, next) => {
 
     if (req.user && req.user.isAdmin) {
@@ -54,6 +39,7 @@ router.post('/', (req, res, next) => {
         .then(order => res.json(order))
         .catch(next)
 })
+
 
 //ONLY ADMINS CAN EDIT ORDER_PRODUCTS
 router.put('/:id', (req, res, next) => {

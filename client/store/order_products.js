@@ -8,6 +8,7 @@ const initialState = [];
 
 const GET_CART = "GET_CART";
 const ADD_TO_CART = "ADD_TO_CART";
+const REMOVE_FROM_CART = "REMOVE_FROM_CART"
 
 
 //ACTION CREATORS
@@ -17,6 +18,9 @@ export function getCart(cart = []) {
 }
 export function add(item) {
     return { type: ADD_TO_CART, item }
+}
+export function remove() {
+    return { type: REMOVE_FROM_CART }
 }
 
 //THUNK 
@@ -37,6 +41,13 @@ export function addCart(productId, orderId, quantity) {
             .catch(console.error)
     }
 }
+export function removeFromCart(productId, orderId) {
+    return function (dispatch) {
+        return axios.delete(`/api/orders/${orderId}/product/${productId}`)
+            .then(dispatch(remove()))
+            .catch(console.error)
+    }
+}
 
 //Reducer
 
@@ -46,6 +57,8 @@ const reducer = function (state = initialState, action) {
             return action.cart || []
         case ADD_TO_CART:
             return [...state, action.item]
+        case REMOVE_FROM_CART:
+            return state
         default:
             return state
     }
