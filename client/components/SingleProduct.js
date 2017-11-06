@@ -18,7 +18,6 @@ function SingleProduct(props) {
       });
   let chosenQuantity;
   const handleQuantity = function(evt) {
-    console.log(evt.target.value);
     evt.preventDefault();
     chosenQuantity = evt.target.value;
   };
