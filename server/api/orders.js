@@ -53,7 +53,6 @@ router.put('/submit', (req, res, next) => {
             date: new Date(),
             shippingAddress: req.body.shippingAddress
         }))
-        .then(order => order.save())
         .then(Order.create({ userId: userId }))
         .then(order => res.json(order))
         .catch(next)
