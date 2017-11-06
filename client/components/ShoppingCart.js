@@ -20,7 +20,7 @@ function ShoppingCart({ orders, orderProducts, products }) {
         <h3>All Items In Cart:</h3>
         <ul>
           {actualOrder.map((item, index) => {
-            let product = products.filter(product => product.id === item.productId)[0]
+            let product = products.find(product => product.id === item.productId)
             return (
               <li key={index} className="shoppingcart-single-item">
                 <Link to={`/products/${item.productId}`}>
@@ -49,7 +49,7 @@ function mapStateToProps(state) {
   return {
     orders: state.orders,
     orderProducts: state.orderProducts,
-    products: state.products
+    products: state.products.allProducts
   }
 }
 
