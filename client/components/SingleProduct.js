@@ -5,7 +5,7 @@ import { addCart } from "../store/order_products";
 import WriteReview from "./reviewForm";
 
 function SingleProduct(props) {
-  const { products, productId, reviews, handleAddCart, orderId } = props;
+  const { products, productId, reviews, handleAddCart, orderId, isLoggedIn } = props;
   let product;
   products.length
     ? (product = products.find(singleProduct => singleProduct.id === productId))
@@ -74,7 +74,7 @@ function SingleProduct(props) {
         ) : (
           <div>"Sorry, this item is out of stock"</div>
         )}
-        <WriteReview productId={props.productId} />
+        {isLoggedIn ? <WriteReview productId={props.productId} /> : <span />}
         <div>
           <h2>Reviews</h2>
         </div>
@@ -99,7 +99,8 @@ const mapStateToProps = function(state, ownProps) {
     products: state.products.allProducts || [],
     productId: productId,
     reviews: state.reviews.allReviews,
-    orderId: state.orders.id
+    orderId: state.orders.id,
+    isLoggedIn: !!state.user.id
   };
 };
 const mapDispatchToProps = function(dispatch) {
