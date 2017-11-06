@@ -12,6 +12,9 @@ function ShoppingCart({ orders, orderProducts, products }) {
 
   const actualOrder = orderProducts.filter(order => order.orderId === orderId);
 
+  let subtotal = 0;
+
+
   return (
     <div>
       <h1>Shopping Cart</h1>
@@ -20,14 +23,17 @@ function ShoppingCart({ orders, orderProducts, products }) {
         <h3>All Items In Cart:</h3>
         <ul>
           {actualOrder.map((item, index) => {
-            let product = products.find(product => product.id === item.productId)
+            let product = products.filter(product => product.id === item.productId)[0]
+            let itemSubtotal = item.quantity * product.price;
+            subtotal += itemSubtotal;
+
             return (
               <li key={index} className="shoppingcart-single-item">
                 <Link to={`/products/${item.productId}`}>
                   <img className="media-object" src={product.photo} width="50px" />
                 </Link>
                 <h3>{product.title}</h3>
-                <p>Qty: {item.quantity}</p>
+                <p>Qty: {item.quantity}  Price: $ {product.price}</p>
                 <hr />
               </li>
             )
@@ -37,7 +43,7 @@ function ShoppingCart({ orders, orderProducts, products }) {
       </div>
 
       <div>
-        <h3>Subtotal: $ {orders.total}</h3>
+        <h3>Subtotal: $ {subtotal}</h3>
         <button>Proceed to Checkout</button>
       </div>
     </div>

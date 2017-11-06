@@ -19,7 +19,7 @@ import {
 import { me } from "./store";
 import { fetchProducts } from "./store/products";
 import { fetchReviews } from "./store/reviews";
-import { fetchOrders } from "./store/orders";
+import { fetchOrders, addToCart } from "./store/orders";
 import { fetchOrderProduct } from "./store/order_products"
 import { fetchCategories } from "./store/categories"
 
@@ -102,6 +102,9 @@ const mapDispatch = dispatch => {
     },
     loadReviews() {
       dispatch(fetchReviews());
+    },
+    addItem() {
+      dispatch(addToCart());
     }
   };
 };

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import { addToCart } from "../store/orders"
 import { getCategory } from '../store/categories'
 import { getSearch } from "../store/products";
 
@@ -13,7 +14,7 @@ class AllProducts extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-          handleChange(evt) {
+  handleChange(evt) {
     this.props.handleCategory(evt.target.value)
   }
 
@@ -26,7 +27,7 @@ class AllProducts extends Component {
     return false;
   }
   render() {
-    const { products, inputValue, handleInputChange, categories, selectedCategory  } = this.props;
+    const { products, inputValue, handleInputChange, categories, selectedCategory, addToCart } = this.props;
     const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
     const filteredProdsByName = filteredByCategory.filter(product => {
       return product.title.toLowerCase().match(inputValue.toLowerCase()) ||
@@ -66,7 +67,7 @@ class AllProducts extends Component {
         </div>
         <div className="product-list" key={products.id}>
 
-          { selectedCategory ? filteredProdsByName.map(product => {
+          {selectedCategory ? filteredProdsByName.map(product => {
             return (
               <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
@@ -77,7 +78,7 @@ class AllProducts extends Component {
                 </Link>
                 <div className="item-price">
                   <span>${product.price}</span>
-                  <button className="btn btn-default">Add To Cart</button>
+                  <button className="btn btn-default" onClick={() => addToCart(product)} value={product.id}>Add To Cart</button>
                 </div>
               </div>
             )
@@ -94,7 +95,7 @@ class AllProducts extends Component {
                   </Link>
                   <div className="item-price">
                     <span>${product.price}</span>
-                    <button className="btn btn-default">Add To Cart</button>
+                    <button className="btn btn-default" onClick={() => addToCart(product)} value={product.id}>Add To Cart</button>
                   </div>
                 </div>
               );
@@ -122,6 +123,9 @@ function mapDispatchToProps(dispatch) {
     },
     handleCategory(category) {
       dispatch(getCategory(category))
+    },
+    handleAddToCart(event) {
+      dispatch(addToCart(event.target.value))
     }
   };
 }
