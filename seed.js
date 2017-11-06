@@ -396,7 +396,7 @@ const productsCategories = [
 
   {
     productId: 1,
-    categoryId: 2
+    categoryId: 4
   },
   {
     productId: 1,
@@ -404,7 +404,15 @@ const productsCategories = [
   },
   {
     productId: 2,
-    categoryId: 1
+    categoryId: 4
+  },
+  {
+    productId: 2,
+    categoryId: 2
+  },
+  {
+    productId: 3,
+    categoryId: 4
   },
   {
     productId: 3,
@@ -416,7 +424,11 @@ const productsCategories = [
   },
   {
     productId: 5,
-    categoryId: 1
+    categoryId: 4
+  },
+  {
+    productId: 5,
+    categoryId: 3
   },
   {
     productId: 6,
@@ -428,7 +440,11 @@ const productsCategories = [
   },
   {
     productId: 8,
-    categoryId: 2
+    categoryId: 4
+  },
+  {
+    productId: 9,
+    categoryId: 4
   },
   {
     productId: 9,
@@ -436,23 +452,35 @@ const productsCategories = [
   },
   {
     productId: 10,
-    categoryId: 3
+    categoryId: 4
+  },
+  {
+    productId: 10,
+    categoryId: 1
   },
   {
     productId: 11,
-    categoryId: 3
+    categoryId: 2
+  },
+  {
+    productId: 11,
+    categoryId: 4
   },
   {
     productId: 12,
-    categoryId: 3
+    categoryId: 2
+  },
+  {
+    productId: 12,
+    categoryId: 4
   },
   {
     productId: 13,
-    categoryId: 4
+    categoryId: 2
   },
   {
     productId: 14,
-    categoryId: 4
+    categoryId: 1
   },
   {
     productId: 15,
@@ -460,7 +488,11 @@ const productsCategories = [
   },
   {
     productId: 16,
-    categoryId: 4
+    categoryId: 2
+  },
+  {
+    productId: 17,
+    categoryId: 2
   },
   {
     productId: 17,
@@ -472,10 +504,22 @@ const productsCategories = [
   },
   {
     productId: 19,
-    categoryId: 4
+    categoryId: 3
   },
   {
     productId: 20,
+    categoryId: 3
+  },
+  {
+    productId: 20,
+    categoryId: 1
+  },
+  {
+    productId: 21,
+    categoryId: 2
+  },
+  {
+    productId: 21,
     categoryId: 4
   },
 ]
