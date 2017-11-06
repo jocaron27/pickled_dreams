@@ -70,7 +70,7 @@ function SingleProduct(props) {
 const mapStateToProps = function(state, ownProps) {
   const productId = Number(ownProps.match.params.id);
   return {
-    products: state.products || [],
+    products: state.products.allProducts || [],
     productId: productId,
     reviews: state.reviews.allReviews
   };
