@@ -19,25 +19,29 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1><Link to="/" onClick={() => {
-        clearSearch(); 
-        clearCategory();
-      }}>Pickled Dreams</Link></h1>
       <nav>
-        {
-          isLoggedIn
-            ? <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={handleClick}>Logout</a>
-            </div>
-            : <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-        }
-        <Link to='/shopping-cart'><button className="btn btn-default"> Cart</button></Link>
+        <div id="nav-logo">
+          <Link to="/" onClick={() => {
+            clearSearch(); 
+            clearCategory();
+          }}><h1>Pickled Dreams</h1></Link>
+        </div>
+        <div id="nav-links">
+          {
+            isLoggedIn
+              ? <div>
+                {/* The navbar will show these links after you log in */}
+                <Link to="/home">Home</Link>
+                <a href="#" onClick={handleClick}>Logout</a>
+              </div>
+              : <div>
+                {/* The navbar will show these links before you log in */}
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+              </div>
+          }
+          <Link to='/shopping-cart'><button className="btn btn-default"> Cart</button></Link>
+        </div>
       </nav>
       <hr />
       {children}
