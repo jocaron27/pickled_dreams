@@ -13,7 +13,8 @@ import {
   AllProducts,
   ShoppingCart,
   SingleProduct,
-  ShippingOrderForm
+  ShippingOrderForm,
+  AllCategories
 } from "./components";
 
 import { me } from "./store";
@@ -59,6 +60,7 @@ class Routes extends Component {
               <Switch>
                 {/* Routes placed here are only available after logging in */}
                 <Route path="/home" component={UserHome} />
+                <Route exact path="/categories" component={AllCategories} />
               </Switch>
             )}
             {/* Displays our Login component as a fallback */}
