@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const WRITE_ADDRESS = 'WRITE_ADDRESS';
 const WRITE_CITY = 'WRITE_CITY';
 const WRITE_STATE = 'WRITE_STATE';
@@ -45,9 +46,10 @@ export function submitOrder(order) {
   return action;
 }
 ///THUNK CREATOR///
-export function submitOrder(id, order) {
+export function orderSubmission(order) {
   return function thunk(dispatch) {
-    return axios.post(`/api/orders/${id}`, order)
+    return axios.put(`/api/orders/submit`, order)
+      .then(res => console.log(res.data))
   }
 }
 
@@ -55,17 +57,17 @@ const reducer = function (state = initialState, action) {
 
   switch (action.type) {
     case WRITE_ADDRESS:
-      return action.address;
+      return Object.assign({}, state, { address: action.address });
     case WRITE_CITY:
-      return action.city;
+      return Object.assign({}, state, { city: action.city })
     case WRITE_STATE:
-      return action.stateOfCity;
+      return Object.assign({}, state, { stateOfCity: action.stateOfCity });
     case WRITE_ZIPCODE:
-      return action.zipCode;
+      return Object.assign({}, state, { zipCode: action.zipCode })
     case WRITE_CCN:
-      return action.ccn;
+      return Object.assign({}, state, { ccn: action.ccn })
     case WRITE_CVC:
-      return action.cvc;
+      return Object.assign({}, state, { cvc: action.cvc })
     case SUBMIT_ORDER:
       return;
     default:

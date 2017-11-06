@@ -5,6 +5,8 @@ const User = require('./server/db/models/user');
 const Order = require('./server/db/models/order');
 const Review = require('./server/db/models/review');
 const OrderProduct = require('./server/db/models/order_product');
+const ProductCategory = require('./server/db/models/product_categories')
+
 
 const categories = [{
   name: 'Romance',
@@ -390,6 +392,93 @@ const orderProducts = [
   }
 
 ]
+const productsCategories = [
+
+  {
+    productId: 1,
+    categoryId: 2
+  },
+  {
+    productId: 1,
+    categoryId: 1
+  },
+  {
+    productId: 2,
+    categoryId: 1
+  },
+  {
+    productId: 3,
+    categoryId: 1
+  },
+  {
+    productId: 4,
+    categoryId: 1
+  },
+  {
+    productId: 5,
+    categoryId: 1
+  },
+  {
+    productId: 6,
+    categoryId: 2
+  },
+  {
+    productId: 7,
+    categoryId: 2
+  },
+  {
+    productId: 8,
+    categoryId: 2
+  },
+  {
+    productId: 9,
+    categoryId: 2
+  },
+  {
+    productId: 10,
+    categoryId: 3
+  },
+  {
+    productId: 11,
+    categoryId: 3
+  },
+  {
+    productId: 12,
+    categoryId: 3
+  },
+  {
+    productId: 13,
+    categoryId: 4
+  },
+  {
+    productId: 14,
+    categoryId: 4
+  },
+  {
+    productId: 15,
+    categoryId: 4
+  },
+  {
+    productId: 16,
+    categoryId: 4
+  },
+  {
+    productId: 17,
+    categoryId: 4
+  },
+  {
+    productId: 18,
+    categoryId: 4
+  },
+  {
+    productId: 19,
+    categoryId: 4
+  },
+  {
+    productId: 20,
+    categoryId: 4
+  },
+]
 
 const seed = () =>
   Promise.all(categories.map(category =>
@@ -410,6 +499,8 @@ const seed = () =>
     )
     .then(() =>
       Promise.all(orderProducts.map(orderProduct => OrderProduct.create(orderProduct))))
+    .then(() =>
+      Promise.all(productsCategories.map(productCategory => ProductCategory.create(productCategory))))
 
 const main = () => {
   console.log('Syncing db...');

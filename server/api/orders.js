@@ -37,9 +37,27 @@ router.get('/:id', (req, res, next) => {
         })
 
 })
+router.put('/submit', (req, res, next) => {
+    const userId = req.user.id
+    Order.findOne({
+        where: {
+            userId: userId,
+            status: 'cart'
+        }
+    })
+        .then(order => order.update({
+            status: 'pending',
+            date: new Date(),
+            shippingAddress: req.body.shippingAddress
+        }))
+        .then(order => order.save())
+        .then(Order.create({ userId: userId }))
+        .then(order => res.json(order))
+        .catch(next)
 
-router.post('/', (req, res, next) => {
-    Order.create(req.body)
+})
+router.post('/', (req, res, next) => {///this is when someone makes 
+    Order.create({ userId: req.user.id })
         .then(order => res.json(order))
         .catch(next)
 })
