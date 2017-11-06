@@ -13,7 +13,7 @@ class AllProducts extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-          handleChange(evt) {
+  handleChange(evt) {
     this.props.handleCategory(evt.target.value)
   }
 
@@ -26,7 +26,7 @@ class AllProducts extends Component {
     return false;
   }
   render() {
-    const { products, inputValue, handleInputChange, categories, selectedCategory  } = this.props;
+    const { products, inputValue, handleInputChange, categories, selectedCategory } = this.props;
     const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
     const filteredProdsByName = filteredByCategory.filter(product => {
       return product.title.toLowerCase().match(inputValue.toLowerCase()) ||
@@ -66,7 +66,7 @@ class AllProducts extends Component {
         </div>
         <div className="product-list" key={products.id}>
 
-          { selectedCategory ? filteredProdsByName.map(product => {
+          {selectedCategory || inputValue ? filteredProdsByName.map(product => {
             return (
               <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
