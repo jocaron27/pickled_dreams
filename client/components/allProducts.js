@@ -128,7 +128,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(getCategory(category))
     },
     handleAddToCart(productId, orderId, quantity) {
-      dispatch(addCart(productId, orderId, quantity))
+      dispatch(addCart(productId, orderId, Number(quantity)))
     }
   };
 }

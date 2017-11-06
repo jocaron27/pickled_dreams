@@ -66,22 +66,21 @@ router.put('/addToCart', (req, res, next) => {
     OrderProduct.findOrCreate({
         where: {
             orderId: req.body.orderId,
-            productId: req.body.productId,
-            quantity: 1
+            productId: req.body.productId
         }
     })
         .spread((order, isCreated) => {
             if (isCreated) {
                 chalk.blue('THIS IS THE ORDER', order)
-                return order
+                return order.update({
+                    quantity: req.body.quantity
+                })
             } else {
                 return order.update({
-                    quantity: order.quantity + req.body.quantity || req.body.quantity,
-                    productId: req.body.productId
+                    quantity: order.quantity + req.body.quantity
                 })
             }
         })
-        .then(order => order.save())
         .then(order => res.json(order))
         .catch(next);
 })
