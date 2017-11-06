@@ -27,6 +27,7 @@ class AllProducts extends Component {
     return false;
   }
   render() {
+    
     const { products, inputValue, handleInputChange, categories, selectedCategory, addToCart } = this.props;
     const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
     const filteredProdsByName = filteredByCategory.filter(product => {
@@ -67,7 +68,7 @@ class AllProducts extends Component {
         </div>
         <div className="product-list" key={products.id}>
 
-          {selectedCategory ? filteredProdsByName.map(product => {
+          {selectedCategory || inputValue ? filteredProdsByName.map(product => {
             return (
               <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
