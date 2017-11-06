@@ -53,19 +53,19 @@ const products = [{
   description: 'Not your everyday fortune cookie -- we\'re talking some serious good luck.',
   price: 25.00,
   quantityAvailable: 44,
-  photo: 'neonyellow.png'
+  photo: '/neonyellow.png'
 }, {
   title: 'Celebrity Sighting',
   description: 'Remember that time you were walking down Fifth Avenue and you saw Beyonce? And you both made eye contact and she smiled at you?! O. M. G...',
   price: 14.50,
   quantityAvailable: 60,
-  photo: 'olive.png'
+  photo: '/olive.png'
 }, {
   title: 'Good Vibes',
   description: 'Beach and a Mai Tai? Acoustic guitar? Summer roadtrip? Whatever floats your boat!',
   price: 3.99,
   quantityAvailable: 86,
-  photo: 'orange.png'
+  photo: '/orange.png'
 }, {
   title: 'The Smell of Freshly Baked Cookies',
   description: 'Someone is in for a treat! Wait just a few seconds longer for them to cool down.',
@@ -89,7 +89,7 @@ const products = [{
   description: 'That time of night when just everything is funny.',
   price: 5.50,
   quantityAvailable: 75,
-  photo: 'orange.png'
+  photo: '/orange.png'
 }, {
   title: 'Beginner\'s Luck',
   description: 'Wow, is this really your first time? You\'re a natural! I\'ve never seen someone be so good at something.',
@@ -113,7 +113,7 @@ const products = [{
   description: 'There are seconds left on the clock, and everything is on the line. All eyes are on you... will you be the hero?',
   price: 68.50,
   quantityAvailable: 30,
-  photo: 'pumpkin.png'
+  photo: '/pumpkin.png'
 }, {
   title: 'Debt Free',
   description: 'Yes, you\'ll be more in debt after buying Debt Free, but at least you\'ll be in the green for a split second.',
