@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout } from '../store'
+import {getSearch} from '../store/products'
+import {getCategory} from '../store/categories'
 
 /**
  * COMPONENT
@@ -13,11 +15,14 @@ import { logout } from '../store'
 
 
 const Main = (props) => {
-  const { children, handleClick, isLoggedIn } = props
+  const { children, handleClick, isLoggedIn, clearSearch, clearCategory } = props
 
   return (
     <div>
-      <h1><Link to="/home">Pickled Dreams</Link></h1>
+      <h1><Link to="/" onClick={() => {
+        clearSearch(); 
+        clearCategory();
+      }}>Pickled Dreams</Link></h1>
       <nav>
         {
           isLoggedIn
@@ -53,6 +58,12 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick() {
       dispatch(logout())
+    },
+    clearSearch() {
+      dispatch(getSearch(""))
+    },
+    clearCategory() {
+      dispatch(getCategory(""))
     }
   }
 }
