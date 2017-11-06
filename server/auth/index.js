@@ -1,9 +1,9 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
+const { User, Order } = require('../db/models')
 module.exports = router
 
 router.post('/login', (req, res, next) => {
-  User.findOne({where: {email: req.body.email}})
+  User.findOne({ where: { email: req.body.email } })
     .then(user => {
       if (!user) {
         res.status(401).send('User not found')
@@ -19,6 +19,7 @@ router.post('/login', (req, res, next) => {
 router.post('/signup', (req, res, next) => {
   User.create(req.body)
     .then(user => {
+      Order.create({ userId: user.id })
       req.login(user, err => (err ? next(err) : res.json(user)))
     })
     .catch(err => {
