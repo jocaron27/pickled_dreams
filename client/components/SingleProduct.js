@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router";
-import { addCart } from '../store/order_products'
+import { addCart } from "../store/order_products";
 import WriteReview from "./reviewForm";
 
 function SingleProduct(props) {
@@ -10,19 +10,18 @@ function SingleProduct(props) {
   products.length
     ? (product = products.find(singleProduct => singleProduct.id === productId))
     : (product = {
-      photo: "",
-      title: "",
-      description: "",
-      price: 0.0,
-      quantityAvailable: 0
-    });
+        photo: "",
+        title: "",
+        description: "",
+        price: 0.0,
+        quantityAvailable: 0
+      });
   let chosenQuantity;
-  const handleQuantity = function (evt) {
-    console.log(evt.target.value)
-    evt.preventDefault()
-    chosenQuantity = evt.target.value
-
-  }
+  const handleQuantity = function(evt) {
+    console.log(evt.target.value);
+    evt.preventDefault();
+    chosenQuantity = evt.target.value;
+  };
 
   let actualQuantity = product.quantityAvailable;
   let displayedQuantity;
@@ -39,7 +38,11 @@ function SingleProduct(props) {
 
   for (let i = 1; i < displayedQuantity; i++) {
     if (i === 1) {
-      options.push(<option defaultValue={i} key={i}>{i}</option>)
+      options.push(
+        <option value={i} key={i}>
+          {i}
+        </option>
+      );
     } else {
       options.push(
         <option value={i} key={i}>
@@ -58,47 +61,54 @@ function SingleProduct(props) {
         <div className="single-product-price">${product.price}</div>
         {product.quantityAvailable ? (
           <div className="single-product-add">
-            <select onChange={handleQuantity}>
+            <select onChange={handleQuantity} defaultValue={1}>
               {options.map(option => option)}
             </select>
-            <button onClick={() => handleAddCart(productId, orderId, chosenQuantity)}>Add to Cart</button>
+            <button
+              onClick={() =>
+                handleAddCart(productId, orderId, chosenQuantity || 1)}
+            >
+              Add to Cart
+            </button>
           </div>
         ) : (
-            <div>"Sorry, this item is out of stock"</div>
-          )}
-        <WriteReview productId={props.productId} />
-        <div><h2>Reviews</h2></div>
-        {reviews.filter(review => review.productId === productId).map(review => {
-          return (
-            <div key={review.id}>
-              <div>{review.rating}</div>
-              <div>{review.review_text}</div>
-            </div>
-          )
-        }
+          <div>"Sorry, this item is out of stock"</div>
         )}
+        <WriteReview productId={props.productId} />
+        <div>
+          <h2>Reviews</h2>
+        </div>
+        {reviews
+          .filter(review => review.productId === productId)
+          .map(review => {
+            return (
+              <div key={review.id}>
+                <div>{review.rating}</div>
+                <div>{review.review_text}</div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );
 }
 
-const mapStateToProps = function (state, ownProps) {
+const mapStateToProps = function(state, ownProps) {
   const productId = Number(ownProps.match.params.id);
   return {
     products: state.products.allProducts || [],
     productId: productId,
     reviews: state.reviews.allReviews,
     orderId: state.orders.id
-
   };
 };
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
   return {
     handleAddCart(productId, orderId, quantity) {
-      dispatch(addCart(productId, orderId, Number(quantity)))
+      dispatch(addCart(productId, orderId, Number(quantity)));
     }
-  }
-}
+  };
+};
 
 //need submit handler
 
