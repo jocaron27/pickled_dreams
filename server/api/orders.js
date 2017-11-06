@@ -39,6 +39,17 @@ router.get('/:id', (req, res, next) => {
         })
 
 })
+router.delete('/:orderId/product/:productId', (req, res, next) => {
+    OrderProduct.findOne({
+        where: {
+            orderId: req.params.orderId,
+            productId: req.params.productId
+        }
+    })
+        .then(order => order.destroy())
+        .catch(next)
+})
+
 router.put('/submit', (req, res, next) => {
     const userId = req.user.id
     Order.findOne({
