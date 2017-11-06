@@ -25,6 +25,8 @@ const Main = (props) => {
             clearSearch(); 
             clearCategory();
           }}><h1>Pickled Dreams</h1></Link>
+          <h3>Existential abstractions for every occasion</h3>
+          <p>Disclaimer: Jars may appear empty, but trust us, they’re full.</p>
         </div>
         <div id="nav-links">
           {

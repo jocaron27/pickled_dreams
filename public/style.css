@@ -17,13 +17,20 @@ nav {
 
 #nav-logo {
     flex: 7;
+    line-height: 0px;
 }
 
 #nav-logo h1 {
     font-family: signpainter;
     color: deeppink;
     font-size: 40px;
+    margin-bottom: 0px;
 }
+
+#nav-logo h3, p {
+    margin-left: 10px;
+}
+
 
 #nav-links {
     flex: 3;
