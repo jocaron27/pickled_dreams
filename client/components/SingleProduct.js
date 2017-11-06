@@ -95,7 +95,7 @@ const mapStateToProps = function (state, ownProps) {
 const mapDispatchToProps = function (dispatch) {
   return {
     handleAddCart(productId, orderId, quantity) {
-      dispatch(addCart(productId, orderId, quantity))
+      dispatch(addCart(productId, orderId, Number(quantity)))
     }
   }
 }
