@@ -10,3 +10,23 @@
     border: 2px solid black;
     padding: 7px;
 }
+
+nav {
+    display: flex;
+}
+
+#nav-logo {
+    flex: 7;
+}
+
+#nav-logo h1 {
+    font-family: signpainter;
+    color: deeppink;
+    font-size: 40px;
+}
+
+#nav-links {
+    flex: 3;
+    display: flex;
+    align-self: center;
+}
