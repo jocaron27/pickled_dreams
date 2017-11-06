@@ -128,9 +128,6 @@ function mapDispatchToProps(dispatch) {
       dispatch(getCategory(category))
     },
     handleAddToCart(productId, orderId, quantity) {
-      console.log('this is productId', productId)
-      console.log('this is orderId', orderId)
-      console.log('this is the quantity', quantity)
       dispatch(addCart(productId, orderId, quantity))
     }
   };
