@@ -17,7 +17,7 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>Pickled Dreams</h1>
+      <h1><Link to="/home">Pickled Dreams</Link></h1>
       <nav>
         {
           isLoggedIn
