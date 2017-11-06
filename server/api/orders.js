@@ -1,6 +1,5 @@
 const router = require('express').Router()
 const { Order, Product, OrderProduct } = require('../db/models')
-const chalk = require('chalk')
 module.exports = router
 
 
@@ -61,7 +60,6 @@ router.put('/submit', (req, res, next) => {
 
 ///ADD TO CART
 router.put('/addToCart', (req, res, next) => {
-    chalk.green(req.body)
     OrderProduct.findOrCreate({
         where: {
             orderId: req.body.orderId,
@@ -70,7 +68,6 @@ router.put('/addToCart', (req, res, next) => {
     })
         .spread((order, isCreated) => {
             if (isCreated) {
-                chalk.blue('THIS IS THE ORDER', order)
                 return order.update({
                     quantity: req.body.quantity
                 })
