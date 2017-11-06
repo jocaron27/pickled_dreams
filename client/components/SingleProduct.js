@@ -45,7 +45,10 @@ function SingleProduct(props) {
         <div className="single-product-description">{product.description}</div>
         <div className="single-product-price">${product.price}</div>
         {product.quantityAvailable ? (
-          <select>{options.map(option => option)}</select>
+          <div className="single-product-add">
+            <select>{options.map(option => option)}</select>
+            <button>Add to Cart</button>
+          </div>
         ) : (
           <div>"Sorry, this item is out of stock"</div>
         )}
@@ -67,7 +70,7 @@ function SingleProduct(props) {
 const mapStateToProps = function(state, ownProps) {
   const productId = Number(ownProps.match.params.id);
   return {
-    products: state.products || [],
+    products: state.products.allProducts || [],
     productId: productId,
     reviews: state.reviews.allReviews
   };

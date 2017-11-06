@@ -1,7 +1,10 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import { getCategory } from '../store/categories'
+import { getSearch } from "../store/products";
 
 class AllProducts extends Component {
   constructor(props) {
@@ -10,7 +13,7 @@ class AllProducts extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(evt) {
+          handleChange(evt) {
     this.props.handleCategory(evt.target.value)
   }
 
@@ -22,14 +25,31 @@ class AllProducts extends Component {
     }
     return false;
   }
-
-
-
   render() {
-    const { products, categories, selectedCategory } = this.props;
+    const { products, inputValue, handleInputChange, categories, selectedCategory  } = this.props;
     const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
+    const filteredProdsByName = filteredByCategory.filter(product => {
+      return product.title.toLowerCase().match(inputValue.toLowerCase()) ||
+        product.title.toUpperCase().match(inputValue.toUpperCase()) ||
+        inputValue === ""
+        ? true
+        : false;
+    });
     return (
       <div className="main">
+        <form
+          className="form-group"
+          style={{ marginTop: "20px" }}
+          onSubmit={handleInputChange}
+        >
+          <input
+            className="list-group"
+            placeholder="search product"
+            type="text"
+            name="product-search"
+          />
+          <button type="submit">Search</button>
+        </form>
         <div>
           <h1>Welcome!</h1>
         </div>
@@ -45,7 +65,8 @@ class AllProducts extends Component {
           </select>
         </div>
         <div className="product-list" key={products.id}>
-          {selectedCategory ? filteredByCategory.map(product => {
+
+          { selectedCategory ? filteredProdsByName.map(product => {
             return (
               <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
@@ -86,19 +107,22 @@ class AllProducts extends Component {
 
 function mapStateToProps(state) {
   return {
-    products: state.products,
+    products: state.products.allProducts,
+    inputValue: state.products.inputValue,
     categories: state.category.categories,
     selectedCategory: state.category.selectedCategory
   };
 }
-
-const mapDispatchToProps = (dispatch) => {
+function mapDispatchToProps(dispatch) {
   return {
+    handleInputChange(event) {
+      event.preventDefault();
+      const searchParam = event.target.children[0].value;
+      dispatch(getSearch(searchParam));
+    },
     handleCategory(category) {
       dispatch(getCategory(category))
     }
-  }
-
+  };
 }
-
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
