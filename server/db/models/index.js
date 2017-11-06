@@ -5,7 +5,7 @@ const Product = require('./product');
 const Review = require('./review');
 const User = require('./user');
 const ProductCategory = require('./product_categories')
-
+const Session = require('./session')
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -33,6 +33,8 @@ Category.belongsToMany(Product, { through: 'product_categories' });//N:M
 Order.hasMany(Product);//1:M
 Product.belongsToMany(Order, { through: 'order_product' });
 Order.belongsToMany(Product, { through: 'order_product' });//N:M
+Session.belongsToMany(Order, { through: 'session_orders' });
+Order.belongsToMany(Session, { through: 'session_orders' });
 ///PRODUCT TABLE still has orderId might be Order.hasMany(product);
 
 ///FILL IN PRICE OF ORDER_PRODUCTS TABLE AFTER order is not 'cart'

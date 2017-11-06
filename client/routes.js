@@ -19,7 +19,7 @@ import {
 import { me } from "./store";
 import { fetchProducts } from "./store/products";
 import { fetchReviews } from "./store/reviews";
-import { fetchOrders } from "./store/orders";
+import { fetchOrders, addToCart } from "./store/orders";
 import { fetchOrderProduct } from "./store/order_products"
 import { fetchCategories } from "./store/categories"
 
@@ -51,7 +51,7 @@ class Routes extends Component {
             <Route exact path="/products" component={AllProducts} />
             <Route exact path="/products/:id" component={SingleProduct} />
             <Route exact path="/shopping-cart" component={ShoppingCart} />
-            <Route exact path="/ordering" component={ShippingOrderForm} />
+            <Route exact path="/checkout" component={ShippingOrderForm} />
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
@@ -102,6 +102,9 @@ const mapDispatch = dispatch => {
     },
     loadReviews() {
       dispatch(fetchReviews());
+    },
+    addItem() {
+      dispatch(addToCart());
     }
   };
 };
