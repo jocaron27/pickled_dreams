@@ -50,6 +50,19 @@ router.delete('/:orderId/product/:productId', (req, res, next) => {
         .then(order => order.destroy())
         .catch(next)
 })
+router.put('/updateCart', (req, res, next) => {
+    if (req.user) {
+        OrderProduct.findOne({
+            where: {
+                orderId: req.body.orderId,
+                productId: req.body.productId
+            }
+        })
+            .then(order => order.update({ quantity: req.body.quantity }))
+            .then(updatedOrder => res.json(updatedOrder))
+            .catch(next)
+    }
+})
 
 router.put('/submit', (req, res, next) => {
     const userId = req.user.id

@@ -27,6 +27,7 @@ class AllProducts extends Component {
     return false;
   }
   render() {
+  
 
     const { products, inputValue, handleInputChange, categories, selectedCategory, handleAddToCart, orderId } = this.props;
     const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
