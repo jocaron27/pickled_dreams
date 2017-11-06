@@ -49,9 +49,7 @@ function ShoppingCart(props) {
 
 function mapStateToProps(state) {
   return {
-    orders: state.orders,
-    order: state.orderProducts,
-    products: state.products.allProducts
+    order: state.orders
   }
 }
 

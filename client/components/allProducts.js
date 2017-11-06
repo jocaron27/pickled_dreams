@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { addToCart } from "../store/orders"
+import { addCart } from '../store/order_products'
 import { getCategory } from '../store/categories'
 import { getSearch } from "../store/products";
 
@@ -27,8 +27,8 @@ class AllProducts extends Component {
     return false;
   }
   render() {
-    
-    const { products, inputValue, handleInputChange, categories, selectedCategory, addToCart } = this.props;
+
+    const { products, inputValue, handleInputChange, categories, selectedCategory, handleAddToCart, orderId } = this.props;
     const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
     const filteredProdsByName = filteredByCategory.filter(product => {
       return product.title.toLowerCase().match(inputValue.toLowerCase()) ||
@@ -79,7 +79,7 @@ class AllProducts extends Component {
                 </Link>
                 <div className="item-price">
                   <span>${product.price}</span>
-                  <button className="btn btn-default" onClick={() => addToCart(product)} value={product.id}>Add To Cart</button>
+                  <button className="btn btn-default" onClick={() => handleAddToCart(product.id, orderId, 1)} value={product.id}>Add To Cart</button>
                 </div>
               </div>
             )
@@ -96,7 +96,7 @@ class AllProducts extends Component {
                   </Link>
                   <div className="item-price">
                     <span>${product.price}</span>
-                    <button className="btn btn-default" onClick={() => addToCart(product)} value={product.id}>Add To Cart</button>
+                    <button className="btn btn-default" onClick={() => handleAddToCart(product.id, orderId, 1)} value={product.id}>Add To Cart</button>
                   </div>
                 </div>
               );
@@ -112,7 +112,9 @@ function mapStateToProps(state) {
     products: state.products.allProducts,
     inputValue: state.products.inputValue,
     categories: state.category.categories,
-    selectedCategory: state.category.selectedCategory
+    selectedCategory: state.category.selectedCategory,
+    order: state.orders,
+    orderId: state.orders.id
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -125,8 +127,11 @@ function mapDispatchToProps(dispatch) {
     handleCategory(category) {
       dispatch(getCategory(category))
     },
-    handleAddToCart(event) {
-      dispatch(addToCart(event.target.value))
+    handleAddToCart(productId, orderId, quantity) {
+      console.log('this is productId', productId)
+      console.log('this is orderId', orderId)
+      console.log('this is the quantity', quantity)
+      dispatch(addCart(productId, orderId, quantity))
     }
   };
 }

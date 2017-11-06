@@ -6,22 +6,35 @@ const initialState = [];
 
 //ACTIONS
 
-const GET_ORDER_PRODUCT = "GET_ORDER_PRODUCT";
+const GET_CART = "GET_CART";
+const ADD_TO_CART = "ADD_TO_CART";
 
 
 //ACTION CREATORS
 
-export function getOrderProduct(order_products) {
-    return { type: GET_ORDER_PRODUCT, order_products }
+export function getCart(cart = []) {
+    return { type: GET_CART, cart }
+}
+export function add(item) {
+    return { type: ADD_TO_CART, item }
 }
 
 //THUNK 
 
-export function fetchOrderProduct() {
+export function fetchCart() {
     return function thunk(dispatch) {
-        return axios.get('/api/order_products/cart')
-            .then(res => dispatch(getOrderProduct(res.data)))
-            .catch(console.err)
+        return axios.get('/api/orders')
+            .then(res => {
+                res ? dispatch(getCart(res.data)) : console.log(res)
+            })
+            .catch(console.error)
+    }
+}
+export function addCart(productId, orderId, quantity) {
+    return function (dispatch) {
+        return axios.put('/api/orders/addToCart', { productId, orderId, quantity })
+            .then(res => dispatch(add(res.data)))
+            .catch(console.error)
     }
 }
 
@@ -29,8 +42,10 @@ export function fetchOrderProduct() {
 
 const reducer = function (state = initialState, action) {
     switch (action.type) {
-        case GET_ORDER_PRODUCT:
-            return action.order_products
+        case GET_CART:
+            return action.cart || []
+        case ADD_TO_CART:
+            return [...state, action.item]
         default:
             return state
     }

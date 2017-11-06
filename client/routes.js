@@ -20,7 +20,7 @@ import { me } from "./store";
 import { fetchProducts } from "./store/products";
 import { fetchReviews } from "./store/reviews";
 import { fetchOrders, addToCart } from "./store/orders";
-import { fetchOrderProduct } from "./store/order_products"
+import { fetchCart } from "./store/order_products"
 import { fetchCategories } from "./store/categories"
 
 /**
@@ -31,9 +31,12 @@ class Routes extends Component {
     this.props.loadInitialData()
     this.props.loadProducts()
     this.props.loadOrders()
-    this.props.loadOrderProducts()
+    this.props.loadCart()
     this.props.loadReviews();
     this.props.loadCategories();
+  }
+  componentWillReceiveProps() {
+    this.props.loadCart()
   }
 
   render() {
@@ -77,7 +80,7 @@ const mapState = state => {
     isLoggedIn: !!state.user.id,
     products: state.products,
     orders: state.orders,
-    order_products: state.orderProducts,
+    cart: state.cart,
     reviews: state.allReviews,
     categories: state.categories
   };
@@ -97,8 +100,8 @@ const mapDispatch = dispatch => {
     loadOrders() {
       dispatch(fetchOrders());
     },
-    loadOrderProducts() {
-      dispatch(fetchOrderProduct())
+    loadCart() {
+      dispatch(fetchCart())
     },
     loadReviews() {
       dispatch(fetchReviews());
@@ -118,7 +121,7 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   loadProducts: PropTypes.func.isRequired,
   loadOrders: PropTypes.func.isRequired,
-  loadOrderProducts: PropTypes.func.isRequired,
+  loadCart: PropTypes.func.isRequired,
   loadCategories: PropTypes.func.isRequired,
   loadReviews: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired

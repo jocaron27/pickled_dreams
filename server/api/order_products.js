@@ -1,26 +1,25 @@
 const router = require('express').Router()
+const chalk = require('chalk');
 const db = require('../db/models');
 const { OrderProduct, Order, Product } = require('../db/models')
+
 module.exports = router
 
 
 // ('api/order_products...')
-router.get('/cart', (req, res, next) => {
-    if (req.user) {
-        Order.findOne({
-            where: {
-                userId: req.user.id,
-                status: 'cart'
-            },
-            include: [{ model: Product }]
-        })
-            .then(order => res.json(order))
-            .catch(next)
-    } else {
-        next();
-    }
+// router.get('/cart', (req, res, next) => {
+//     if (req.user) {
+//         Order.findOne({
+//             where: {
+//                 userId: req.user.id,
 
-})
+//             .then(order => res.json(order))
+//             .catch(next)
+//     } else {
+//         next();
+//     }
+
+// })
 router.get('/', (req, res, next) => {
 
     if (req.user && req.user.isAdmin) {
