@@ -1,21 +1,36 @@
+
 import React, { Component } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Router } from "react-router";
-import { Route, Switch } from "react-router-dom";
-import SingleProduct from "./SingleProduct";
+
+import { getCategory } from '../store/categories'
 import { getSearch } from "../store/products";
 
 class AllProducts extends Component {
   constructor(props) {
     super(props);
+    this.productCategoryFilter = this.productCategoryFilter.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
+          handleChange(evt) {
+    this.props.handleCategory(evt.target.value)
+  }
+
+  productCategoryFilter(product, selectedCategory) {
+    for (let category of product.categories) {
+      if (category.name.match(selectedCategory)) {
+        return true
+      }
+    }
+    return false;
+  }
   render() {
-    const { products, inputValue, handleInputChange } = this.props;
-    const filteredProds = products.filter(product => {
-      return product.title.toLowerCase().match(inputValue) ||
-        product.title.toUpperCase().match(inputValue) ||
+    const { products, inputValue, handleInputChange, categories, selectedCategory  } = this.props;
+    const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
+    const filteredProdsByName = filteredByCategory.filter(product => {
+      return product.title.toLowerCase().match(inputValue.toLowerCase()) ||
+        product.title.toUpperCase().match(inputValue.toUpperCase()) ||
         inputValue === ""
         ? true
         : false;
@@ -38,8 +53,20 @@ class AllProducts extends Component {
         <div>
           <h1>Welcome!</h1>
         </div>
+        <div className="category-options">
+          <select onChange={this.handleChange}>
+            <option value="">Filter By Category</option>
+            {
+              categories && categories.map(category => {
+                return <option value={category.name} key={category.id}>{category.name}</option>
+              })
+
+            }
+          </select>
+        </div>
         <div className="product-list" key={products.id}>
-          {filteredProds.map(product => {
+
+          { selectedCategory ? filteredProdsByName.map(product => {
             return (
               <div className="product-container" key={product.id}>
                 <div className="product-title">{product.title}</div>
@@ -53,8 +80,25 @@ class AllProducts extends Component {
                   <button className="btn btn-default">Add To Cart</button>
                 </div>
               </div>
-            );
-          })}
+            )
+          })
+            :
+            products.map(product => {
+              return (
+                <div className="product-container" key={product.id}>
+                  <div className="product-title">{product.title}</div>
+                  <Link to={`/products/${product.id}`} className="list-link">
+                    <div className="product">
+                      <img src={product.photo} width="200px" />
+                    </div>
+                  </Link>
+                  <div className="item-price">
+                    <span>${product.price}</span>
+                    <button className="btn btn-default">Add To Cart</button>
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     );
@@ -64,7 +108,9 @@ class AllProducts extends Component {
 function mapStateToProps(state) {
   return {
     products: state.products.allProducts,
-    inputValue: state.products.inputValue
+    inputValue: state.products.inputValue,
+    categories: state.category.categories,
+    selectedCategory: state.category.selectedCategory
   };
 }
 function mapDispatchToProps(dispatch) {
@@ -73,6 +119,9 @@ function mapDispatchToProps(dispatch) {
       event.preventDefault();
       const searchParam = event.target.children[0].value;
       dispatch(getSearch(searchParam));
+    },
+    handleCategory(category) {
+      dispatch(getCategory(category))
     }
   };
 }

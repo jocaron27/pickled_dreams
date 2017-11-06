@@ -4,6 +4,7 @@ const Order = require('./order.js');
 const Product = require('./product');
 const Review = require('./review');
 const User = require('./user');
+const ProductCategory = require('./product_categories')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -21,20 +22,26 @@ const User = require('./user');
 
 
 
- // NEED BOTH belongsToMany when dealing with through tables
+// NEED BOTH belongsToMany when dealing with through tables
 User.hasMany(Review);//1:M
-Review.belongsToMany(User, {through: 'user_reviews'})
-User.belongsToMany(Review,{through: 'user_reviews'});//N:M
+Review.belongsToMany(User, { through: 'user_reviews' })
+User.belongsToMany(Review, { through: 'user_reviews' });//N:M
 User.hasMany(Order);//1:M
 Product.hasMany(Review);//1:M unsure if we need a Review.belongsToMany(Product) when all we will need to do to get single product reviews is product.getReviews
-Product.belongsToMany(Category, {through: 'product_categories'});
-Category.belongsToMany(Product, {through: 'product_categories'});//N:M
+Product.belongsToMany(Category, { through: 'product_categories' });
+Category.belongsToMany(Product, { through: 'product_categories' });//N:M
 Order.hasMany(Product);//1:M
-Product.belongsToMany(Order, {through: 'order_product'});
-Order.belongsToMany(Product, {through: 'order_product'});//N:M
-///Product table still has orderId might be Order.hasMany(product);
-///FILL IN PRICE OF order_products AFTER order is not 'cart'
+Product.belongsToMany(Order, { through: 'order_product' });
+Order.belongsToMany(Product, { through: 'order_product' });//N:M
+///PRODUCT TABLE still has orderId might be Order.hasMany(product);
+
+///FILL IN PRICE OF ORDER_PRODUCTS TABLE AFTER order is not 'cart'
+
 //SET DATE WHEN ORDER.status in ORDER TABLE is not 'cart'
+///SET TOTAL AFTER ORDER IS CONFIRMED AS WELL in ORDER TABLE
+
+//LOOK INTO SESSIONS TABLE, MAYBE PUT CART OF NON-LOGIN USER on DATA possibly
+
 module.exports = {
-  Category, OrderProduct, Order, Product, Review, User
+  Category, OrderProduct, Order, Product, Review, User, ProductCategory
 }
