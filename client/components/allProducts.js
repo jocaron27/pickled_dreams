@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { fetchProducts } from "../store/products";
+import { addToCart } from "../store/orders"
 import { connect } from "react-redux";
 import { Router } from "react-router";
 import { Route, Switch } from "react-router-dom";
@@ -29,7 +30,7 @@ class AllProducts extends Component {
                 </Link>
                 <div className="item-price">
                   <span>${product.price}</span>
-                  <button className="btn btn-default">Add To Cart</button>
+                  <button className="btn btn-default" onClick={()=> this.props.addToCart(product) }>Add To Cart</button>
                 </div>
               </div>
             );
@@ -42,8 +43,9 @@ class AllProducts extends Component {
 
 function mapStateToProps(state) {
   return {
-    products: state.products
+    products: state.products,
+    // item: state.products.item
   };
 }
 
-export default connect(mapStateToProps)(AllProducts);
+export default connect(mapStateToProps, { addToCart })(AllProducts);
