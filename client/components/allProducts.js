@@ -22,7 +22,7 @@ class AllProducts extends Component {
 
   handleAddToCart(productId, orderId, quantity) {
     if (!this.props.isLoggedIn) {
-      return alert("please login!");
+      return alert("please log in or sign up!");
     }
     this.props.addCart(productId, orderId, +quantity);
   }
