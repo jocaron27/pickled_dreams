@@ -11,10 +11,13 @@ import orderForm from './order-form';
 import category from './categories';
 const reducer = combineReducers({ user, products, orders, orderProducts, reviews, orderForm, category })
 
-const middleware = composeWithDevTools(applyMiddleware(
-  thunkMiddleware,
-  createLogger({ collapsed: true })
-))
+let middleware;
+if (process.env.NODE_ENV === 'production') {
+  middleware = applyMiddleware(thunkMiddleware);
+} else {
+  middleware = composeWithDevTools(applyMiddleware(thunkMiddleware, createLogger({ collapsed: true })));
+}
+
 const store = createStore(reducer, middleware)
 
 export default store
