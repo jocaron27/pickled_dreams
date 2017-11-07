@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router";
-import { addCart } from "../store/order_products";
+import { addCart } from "../store/cart";
 import WriteReview from "./reviewForm";
 
 function SingleProduct(props) {
@@ -11,7 +11,8 @@ function SingleProduct(props) {
     reviews,
     handleAddCart,
     orderId,
-    isLoggedIn
+    isLoggedIn,
+    cart
   } = props;
   let product;
   products.length
@@ -23,6 +24,7 @@ function SingleProduct(props) {
         price: 0.0,
         quantityAvailable: 0
       });
+
   let chosenQuantity;
   const handleQuantity = function(evt) {
     evt.preventDefault();
@@ -30,6 +32,13 @@ function SingleProduct(props) {
   };
 
   let actualQuantity = product.quantityAvailable;
+  // console.log(cart);
+  // console.log(cart.products);
+  // let alreadyInCart = cart.products.find(
+  //   cartProduct => cartProduct.id === product.id
+  // );
+  // if (alreadyInCart) actualQuantity -= alreadyInCart.quantity;
+
   let displayedQuantity;
   actualQuantity < 25
     ? (displayedQuantity = actualQuantity)
@@ -73,7 +82,7 @@ function SingleProduct(props) {
             {isLoggedIn ? (
               <button
                 onClick={() =>
-                  handleAddCart(productId, orderId, chosenQuantity || 1)}
+                  handleAddCart(productId, orderId, chosenQuantity)}
               >
                 Add to Cart
               </button>
@@ -109,14 +118,16 @@ const mapStateToProps = function(state, ownProps) {
     products: state.products.allProducts || [],
     productId: productId,
     reviews: state.reviews.allReviews,
-    orderId: state.orders.id,
-    isLoggedIn: !!state.user.id
+    orderId: state.cart.id,
+    isLoggedIn: !!state.user.id,
+    cart: state.cart
   };
 };
 const mapDispatchToProps = function(dispatch) {
   return {
     handleAddCart(productId, orderId, quantity) {
-      dispatch(addCart(productId, orderId, Number(quantity)));
+      console.log(quantity);
+      dispatch(addCart(productId, orderId, +quantity));
     }
   };
 };
