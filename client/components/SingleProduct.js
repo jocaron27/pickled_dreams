@@ -5,7 +5,14 @@ import { addCart } from "../store/order_products";
 import WriteReview from "./reviewForm";
 
 function SingleProduct(props) {
-  const { products, productId, reviews, handleAddCart, orderId, isLoggedIn } = props;
+  const {
+    products,
+    productId,
+    reviews,
+    handleAddCart,
+    orderId,
+    isLoggedIn
+  } = props;
   let product;
   products.length
     ? (product = products.find(singleProduct => singleProduct.id === productId))
@@ -63,12 +70,16 @@ function SingleProduct(props) {
             <select onChange={handleQuantity} defaultValue={1}>
               {options.map(option => option)}
             </select>
-            <button
-              onClick={() =>
-                handleAddCart(productId, orderId, chosenQuantity || 1)}
-            >
-              Add to Cart
-            </button>
+            {isLoggedIn ? (
+              <button
+                onClick={() =>
+                  handleAddCart(productId, orderId, chosenQuantity || 1)}
+              >
+                Add to Cart
+              </button>
+            ) : (
+              <span />
+            )}
           </div>
         ) : (
           <div>"Sorry, this item is out of stock"</div>

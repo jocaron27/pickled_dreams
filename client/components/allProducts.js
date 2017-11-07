@@ -63,6 +63,9 @@ class AllProducts extends Component {
         ? true
         : false;
     });
+    const messageLoggedIn = "Welcome!";
+    const messageLoggedOut =
+      "Welcome! Please sign up or log in to start shopping.";
     return (
       <div className="main">
         <form
@@ -79,7 +82,7 @@ class AllProducts extends Component {
           <button type="submit">Search</button>
         </form>
         <div>
-          <h1>Welcome!</h1>
+          <h1>{!isLoggedIn ? messageLoggedOut : messageLoggedIn}</h1>
         </div>
         <div className="category-options">
           <select onChange={this.handleChange}>
@@ -120,6 +123,15 @@ class AllProducts extends Component {
                 );
               })
             : products.map(product => {
+                const button = (
+                  <button
+                    className="btn btn-default"
+                    onClick={() => this.handleAddToCart(product.id, orderId, 1)}
+                    value={product.id}
+                  >
+                    Add To Cart
+                  </button>
+                );
                 return (
                   <div className="product-container" key={product.id}>
                     <div className="product-title">{product.title}</div>
@@ -130,14 +142,7 @@ class AllProducts extends Component {
                     </Link>
                     <div className="item-price">
                       <span>${product.price}</span>
-                      <button
-                        className="btn btn-default"
-                        onClick={() =>
-                          this.handleAddToCart(product.id, orderId, 1)}
-                        value={product.id}
-                      >
-                        Add To Cart
-                      </button>
+                      {isLoggedIn ? button : <span />}
                     </div>
                   </div>
                 );
