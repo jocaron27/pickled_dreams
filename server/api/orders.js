@@ -22,9 +22,7 @@ router.get('/', (req, res, next) => {
         })
             .then(order => res.json(order))
             .catch(next)
-    } else {
-        res.sendStatus(404);
-    }
+    } 
 })
 
 router.get('/:id', (req, res, next) => {
