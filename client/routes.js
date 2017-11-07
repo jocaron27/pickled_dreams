@@ -21,23 +21,23 @@ import { me } from "./store";
 import { fetchProducts } from "./store/products";
 import { fetchReviews } from "./store/reviews";
 import { fetchOrders, addToCart } from "./store/orders";
-import { fetchCart } from "./store/order_products"
-import { fetchCategories } from "./store/categories"
+import { fetchCart } from "./store/order_products";
+import { fetchCategories } from "./store/categories";
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData()
-    this.props.loadProducts()
-    this.props.loadOrders()
-    this.props.loadCart()
+    this.props.loadInitialData();
+    this.props.loadProducts();
+    this.props.loadOrders();
+    this.props.loadCart();
     this.props.loadReviews();
     this.props.loadCategories();
   }
   componentWillReceiveProps() {
-    this.props.loadCart()
+    this.props.loadCart();
   }
 
   render() {
@@ -104,7 +104,7 @@ const mapDispatch = dispatch => {
       dispatch(fetchOrders());
     },
     loadCart() {
-      dispatch(fetchCart())
+      dispatch(fetchCart());
     },
     loadReviews() {
       dispatch(fetchReviews());
