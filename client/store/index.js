@@ -12,7 +12,6 @@ import category from './categories';
 const reducer = combineReducers({ user, products, orders, orderProducts, reviews, orderForm, category })
 
 let middleware;
-console.log('process.env: ', process.env);
 if (process.env.NODE_ENV === 'production') {
   middleware = applyMiddleware(thunkMiddleware);
 } else {
