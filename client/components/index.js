@@ -10,4 +10,4 @@ export { default as ShoppingCart } from './ShoppingCart';
 export { default as WriteReview } from './reviewForm';
 export { default as SingleProduct } from './SingleProduct';
 export { default as ShippingOrderForm } from './ShippingOrderForm';
-export { Login, Signup } from './auth-form';
+export { default as ConfirmationPage} from './ConfirmationPage';
