@@ -45,9 +45,7 @@ export function removeFromCart(productId, orderId) {
   return function(dispatch) {
     return axios
       .delete(`/api/orders/${orderId}/product/${productId}`)
-      .then(res => {
-        dispatch(fetchOrder());
-      })
+      .then(res => dispatch(fetchOrder()))
       .catch(console.error);
   };
 }

@@ -30,9 +30,7 @@ router.get("/cart", (req, res, next) => {
       },
       include: [{ model: Product }]
     })
-      .then(order => {
-        res.json(order);
-      })
+      .then(order => res.json(order))
       .catch(next);
   }
 });
