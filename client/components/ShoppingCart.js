@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { removeFromCart } from "../store/order_products";
+import { removeFromCart } from "../store/cart";
+import { addCart } from "../store/cart";
+
 function ShoppingCart(props) {
   // let userOrder = orders.find(order => order.status === 'cart');
 
@@ -17,9 +19,9 @@ function ShoppingCart(props) {
       <div id="shoppingcart-all-items">
         <h3>All Items In Cart:</h3>
         <ul>
-          {props.order.products &&
-            props.order.products.map(product => {
-              subtotal += product.order_product.quantity * product.price;
+          {props.cart.products &&
+            props.cart.products.map(product => {
+              subtotal += product.quantity * product.price;
               return (
                 <li key={product.id} className="shoppingcart-single-item">
                   <Link to={`/products/${product.id}`}>
@@ -36,7 +38,7 @@ function ShoppingCart(props) {
                   </p>
                   <button
                     onClick={() =>
-                      props.handleRemove(product.id, props.order.id)}
+                      props.handleRemove(product.id, props.cart.id)}
                   >
                     Remove From Cart
                   </button>
@@ -61,13 +63,13 @@ function ShoppingCart(props) {
 
 function mapStateToProps(state) {
   return {
-    order: state.orders
+    cart: state.cart
   };
 }
 function mapDispatchToProps(dispatch) {
   return {
     handleRemove(productId, orderId) {
-      alert("item removed!");
+      alert("Item removed!");
       dispatch(removeFromCart(productId, orderId));
     }
   };
