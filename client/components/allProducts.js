@@ -1,10 +1,9 @@
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { addCart } from '../store/order_products'
-import { getCategory } from '../store/categories'
+import { addCart } from "../store/order_products";
+import { getCategory } from "../store/categories";
 import { getSearch } from "../store/products";
 
 class AllProducts extends Component {
@@ -12,24 +11,51 @@ class AllProducts extends Component {
     super(props);
     this.productCategoryFilter = this.productCategoryFilter.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleCategory = this.handleCategory.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleChange(evt) {
-    this.props.handleCategory(evt.target.value)
+    this.props.handleCategory(evt.target.value);
+  }
+
+  handleAddToCart(productId, orderId, quantity) {
+    if (!this.props.isLoggedIn) {
+      return alert("please login!");
+    }
+    this.props.addCart(productId, orderId, +quantity);
+  }
+  handleCategory(category) {
+    this.props.getCategory(category);
+  }
+
+  handleInputChange(event) {
+    event.preventDefault();
+    const searchParam = event.target.children[0].value;
+    this.props.getSearch(searchParam);
   }
 
   productCategoryFilter(product, selectedCategory) {
     for (let category of product.categories) {
       if (category.name.match(selectedCategory)) {
-        return true
+        return true;
       }
     }
     return false;
   }
   render() {
-
-    const { products, inputValue, handleInputChange, categories, selectedCategory, handleAddToCart, orderId } = this.props;
-    const filteredByCategory = products.filter(product => this.productCategoryFilter(product, selectedCategory))
+    const {
+      products,
+      inputValue,
+      categories,
+      selectedCategory,
+      orderId,
+      isLoggedIn
+    } = this.props;
+    const filteredByCategory = products.filter(product =>
+      this.productCategoryFilter(product, selectedCategory)
+    );
     const filteredProdsByName = filteredByCategory.filter(product => {
       return product.title.toLowerCase().match(inputValue.toLowerCase()) ||
         product.title.toUpperCase().match(inputValue.toUpperCase()) ||
@@ -42,7 +68,7 @@ class AllProducts extends Component {
         <form
           className="form-group"
           style={{ marginTop: "20px" }}
-          onSubmit={handleInputChange}
+          onSubmit={this.handleInputChange}
         >
           <input
             className="list-group"
@@ -58,49 +84,64 @@ class AllProducts extends Component {
         <div className="category-options">
           <select onChange={this.handleChange}>
             <option value="">Filter By Category</option>
-            {
-              categories && categories.map(category => {
-                return <option value={category.name} key={category.id}>{category.name}</option>
-              })
-
-            }
+            {categories &&
+              categories.map(category => {
+                return (
+                  <option value={category.name} key={category.id}>
+                    {category.name}
+                  </option>
+                );
+              })}
           </select>
         </div>
         <div className="product-list" key={products.id}>
-
-          {selectedCategory || inputValue ? filteredProdsByName.map(product => {
-            return (
-              <div className="product-container" key={product.id}>
-                <div className="product-title">{product.title}</div>
-                <Link to={`/products/${product.id}`} className="list-link">
-                  <div className="product">
-                    <img src={product.photo} width="200px" />
-                  </div>
-                </Link>
-                <div className="item-price">
-                  <span>${product.price}</span>
-                  <button className="btn btn-default" onClick={() => handleAddToCart(product.id, orderId, 1)} value={product.id}>Add To Cart</button>
-                </div>
-              </div>
-            )
-          })
-            :
-            products.map(product => {
-              return (
-                <div className="product-container" key={product.id}>
-                  <div className="product-title">{product.title}</div>
-                  <Link to={`/products/${product.id}`} className="list-link">
-                    <div className="product">
-                      <img src={product.photo} width="200px" />
+          {selectedCategory || inputValue
+            ? filteredProdsByName.map(product => {
+                return (
+                  <div className="product-container" key={product.id}>
+                    <div className="product-title">{product.title}</div>
+                    <Link to={`/products/${product.id}`} className="list-link">
+                      <div className="product">
+                        <img src={product.photo} width="200px" />
+                      </div>
+                    </Link>
+                    <div className="item-price">
+                      <span>${product.price}</span>
+                      <button
+                        className="btn btn-default"
+                        onClick={() =>
+                          this.handleAddToCart(product.id, orderId, 1)}
+                        value={product.id}
+                      >
+                        Add To Cart
+                      </button>
                     </div>
-                  </Link>
-                  <div className="item-price">
-                    <span>${product.price}</span>
-                    <button className="btn btn-default" onClick={() => handleAddToCart(product.id, orderId, 1)} value={product.id}>Add To Cart</button>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            : products.map(product => {
+                return (
+                  <div className="product-container" key={product.id}>
+                    <div className="product-title">{product.title}</div>
+                    <Link to={`/products/${product.id}`} className="list-link">
+                      <div className="product">
+                        <img src={product.photo} width="200px" />
+                      </div>
+                    </Link>
+                    <div className="item-price">
+                      <span>${product.price}</span>
+                      <button
+                        className="btn btn-default"
+                        onClick={() =>
+                          this.handleAddToCart(product.id, orderId, 1)}
+                        value={product.id}
+                      >
+                        Add To Cart
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
         </div>
       </div>
     );
@@ -114,22 +155,30 @@ function mapStateToProps(state) {
     categories: state.category.categories,
     selectedCategory: state.category.selectedCategory,
     order: state.orders,
-    orderId: state.orders.id
+    orderId: state.orders.id,
+    isLoggedIn: !!state.user.id
   };
 }
-function mapDispatchToProps(dispatch) {
-  return {
-    handleInputChange(event) {
-      event.preventDefault();
-      const searchParam = event.target.children[0].value;
-      dispatch(getSearch(searchParam));
-    },
-    handleCategory(category) {
-      dispatch(getCategory(category))
-    },
-    handleAddToCart(productId, orderId, quantity) {
-      dispatch(addCart(productId, orderId, Number(quantity)))
-    }
-  };
-}
+
+const mapDispatchToProps = { addCart, getSearch, getCategory };
+
+// const mapDispatchToProps = {addCart}
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addCart(a,b,c) {
+//       dispatch(addCart(a,b,c))
+//     }
+//   }
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     handleInputChange(event) {
+//       event.preventDefault();
+//       const searchParam = event.target.children[0].value;
+//       dispatch(getSearch(searchParam));
+//     }
+//   };
+// }
 export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
