@@ -6,13 +6,6 @@ import { logout } from "../store";
 import { getSearch } from "../store/products";
 import { getCategory } from "../store/categories";
 
-/**
- * COMPONENT
- *  The Main component is our 'picture frame' - it displays the navbar and anything
- *  else common to our entire app. The 'picture' inside the frame is the space
- *  rendered out by the component's `children`.
- */
-
 const Main = props => {
   const {
     children,
@@ -25,42 +18,46 @@ const Main = props => {
   return (
     <div>
       <nav>
-        <div id="nav-logo">
-          <Link
-            to="/"
-            onClick={() => {
-              clearSearch();
-              clearCategory();
-            }}
-          >
-            <h1>Pickled Dreams</h1>
-          </Link>
+        <div id="nav-main">
+          <div id="nav-logo">
+            <Link
+              to="/"
+              onClick={() => {
+                clearSearch();
+                clearCategory();
+              }}
+            >
+              <h1>Pickled Dreams</h1>
+            </Link>
+          </div>
+          <div id="nav-links">
+            {isLoggedIn ? (
+              <div className="nav-button">
+                {/* The navbar will show these links after you log in */}
+                <Link to="/home">Home</Link>
+                <a href="#" onClick={handleClick}>
+                  Logout
+                </a>
+              </div>
+            ) : (
+              <div className="nav-button">
+                {/* The navbar will show these links before you log in */}
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+              </div>
+            )}
+            {isLoggedIn ? (
+              <Link to="/shopping-cart">
+                <span className="glyphicon glyphicon-shopping-cart" />
+              </Link>
+            ) : (
+              <span />
+            )}
+          </div>
+        </div>
+        <div id="nav-tagline">
           <h3>Existential abstractions for every occasion</h3>
           <p>Disclaimer: Jars may appear empty, but trust us, they’re full.</p>
-        </div>
-        <div id="nav-links">
-          {isLoggedIn ? (
-            <div>
-              {/* The navbar will show these links after you log in */}
-              <Link to="/home">Home</Link>
-              <a href="#" onClick={handleClick}>
-                Logout
-              </a>
-            </div>
-          ) : (
-            <div>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-            </div>
-          )}
-          {isLoggedIn ? (
-            <Link to="/shopping-cart">
-              <button className="btn btn-default"> Cart</button>
-            </Link>
-          ) : (
-            <span />
-          )}
         </div>
       </nav>
       <hr />

@@ -1,3 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin|Open+Sans');
+
+/* ----------- General -------------- */
+
+body {
+    margin: 0;
+}
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* ----------- Nav -------------- */
+
+nav {
+    display: flex;
+    flex-direction: column;
+}
+
+#nav-main {
+    background-color: #4f79f3;
+    box-shadow: 0 5px #173632;
+    display: flex !important;
+    flex-direction: row;
+    vertical-align: center;
+    justify-content: space-between;
+}
+
+#nav-logo {
+    line-height: 0px;
+    margin-bottom: 2em;
+    margin-left: 2em;
+}
+
+#nav-logo h1 {
+    font-family: 'Cabin', sans-serif;
+    color: white;
+    font-size: 40px;
+    margin-bottom: 0px;
+}
+
+#nav-tagline {
+    text-align: center;
+}
+
+#nav-logo a {
+    text-decoration: none;
+}
+
+#nav-logo a:hover {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#nav-logo a:active {
+    text-decoration: none !important;
+}
+
+#nav-links {
+    display: flex;
+    align-self: center;
+    padding-right: 2em;
+}
+
+#nav-links .nav-button a {
+    align-self: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: 'Open Sans';
+    background: none;
+    margin: 0em .5em;
+    padding: 1em 2em;
+    color: #491037;
+    font-size: inherit;
+    font-weight: 700;
+}
+
+#nav-links .nav-button a:hover {
+    color: #E9E8EF;
+}
+
+.glyphicon-shopping-cart {
+    font-size: 1.5em;
+    color: white;
+}
+
+.glyphicon:hover {
+    cursor: pointer !important;
+}
+
+/* ----------- Products -------------- */
 .product-list {
     display: flex;
     flex-wrap: wrap;
@@ -8,31 +100,4 @@
     margin: 15px;
     border: 2px solid black;
     padding: 7px;
-}
-
-nav {
-    display: flex;
-}
-
-#nav-logo {
-    flex: 7;
-    line-height: 0px;
-}
-
-#nav-logo h1 {
-    font-family: signpainter;
-    color: deeppink;
-    font-size: 40px;
-    margin-bottom: 0px;
-}
-
-#nav-logo h3, p {
-    margin-left: 10px;
-}
-
-
-#nav-links {
-    flex: 3;
-    display: flex;
-    align-self: center;
 }

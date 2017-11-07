@@ -17,12 +17,12 @@ class AllProducts extends Component {
   }
 
   handleChange(evt) {
-    this.props.handleCategory(evt.target.value);
+    this.handleCategory(evt.target.value);
   }
 
   handleAddToCart(productId, orderId, quantity) {
     if (!this.props.isLoggedIn) {
-      return alert("please log in or sign up!");
+      return alert("Please log in or sign up to order.");
     }
     this.props.addCart(productId, orderId, +quantity);
   }
