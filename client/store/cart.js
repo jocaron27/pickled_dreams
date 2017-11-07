@@ -22,7 +22,9 @@ export function fetchOrder() {
   return function thunk(dispatch) {
     return axios
       .get("/api/orders/cart")
-      .then(res => dispatch(getOrder(res.data)))
+      .then(res => {
+        dispatch(getOrder(res.data));
+      })
       .catch(console.err);
   };
 }
@@ -31,7 +33,7 @@ export function addCart(productId, orderId, quantity) {
   return function(dispatch) {
     return axios
       .put("/api/orders/addToCart", { productId, orderId, quantity })
-      .then(res => dispatch(fetchOrder()))
+      .then(() => dispatch(fetchOrder()))
       .then(addedItem => {
         alert("Item added to cart!");
       })
@@ -41,15 +43,12 @@ export function addCart(productId, orderId, quantity) {
 
 export function removeFromCart(productId, orderId) {
   return function(dispatch) {
-    return (
-      axios
-        .delete(`/api/orders/${orderId}/product/${productId}`)
-        .then(dispatch(fetchOrder()))
-        //   .then(() => {
-        //     alert("Item deleted!");
-        //   })
-        .catch(console.error)
-    );
+    return axios
+      .delete(`/api/orders/${orderId}/product/${productId}`)
+      .then(res => {
+        dispatch(fetchOrder());
+      })
+      .catch(console.error);
   };
 }
 
