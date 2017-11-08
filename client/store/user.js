@@ -28,10 +28,10 @@ export const me = () => dispatch =>
     .get("/auth/me")
     .then(res => {
       return dispatch(getUser(res.data || defaultUser))
-      .then(res => {
-        dispatch(fetchOrders())
-        dispatch(fetchOrder())
-      });
+    })
+    .then(() => {
+      dispatch(fetchOrders())
+      dispatch(fetchOrder())
     })
     .catch(err => console.log(err));
 
@@ -60,7 +60,7 @@ export const logout = () => dispatch =>
 /**
  * REDUCER
  */
-export default function(state = defaultUser, action) {
+export default function (state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user;

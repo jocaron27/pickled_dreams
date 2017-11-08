@@ -7,7 +7,7 @@ function ShoppingCart(props) {
   // let userOrder = orders.find(order => order.status === 'cart');
 
   let subtotal = 0;
-
+  
   function quantityOptions(currentQuantity) {
     let options = []
     for (let i = 0; i < currentQuantity + 5; i++) {
@@ -44,7 +44,7 @@ function ShoppingCart(props) {
                     Qty: {product.order_product.quantity} Price: ${" "}
                     {product.price}
                   </p>
-                  <select onChange={(event) => props.handleUpdate(product.id, props.order.id, event.target.value)} defaultValue={product.order_product.quantity}>
+                  <select onChange={(event) => props.handleUpdate(product.id, props.cart.id, event.target.value)} defaultValue={product.order_product.quantity}>
                     {
                       quantityOptions(product.order_product.quantity)
                     }

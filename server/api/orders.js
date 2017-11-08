@@ -79,7 +79,8 @@ router.put("/submit", (req, res, next) => {
             order.update({
                 status: "pending",
                 date: new Date(),
-                shippingAddress: req.body.shippingAddress
+                shippingAddress: req.body.shippingAddress,
+                total: req.body.total
             })
         )
         .then(Order.create({ userId: userId }))

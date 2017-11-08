@@ -70,7 +70,6 @@ class Routes extends Component {
                 {/* Routes placed here are only available after logging in */}
                 <Route path="/home" component={UserHome} />
                 <Route exact path="/categories" component={AllCategories} />
-                <Route path="/orders" component={UserOrders} />
               </Switch>
             )}
             {/* Displays our Login component as a fallback */}
@@ -81,7 +80,7 @@ class Routes extends Component {
     );
   }
 }
-
+/// <Route path="/orders" component={UserOrders} /> Add this to LoggedIn routes when ready!!!
 /**
  * CONTAINER
  */
