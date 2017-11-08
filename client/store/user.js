@@ -1,6 +1,8 @@
 import axios from "axios";
 import history from "../history";
-import { getCart, fetchCart } from "./cart";
+import { fetchOrder } from "./cart";
+import { fetchOrders } from "./orders";
+
 /**
  * ACTION TYPES
  */
@@ -24,7 +26,13 @@ const removeUser = () => ({ type: REMOVE_USER });
 export const me = () => dispatch =>
   axios
     .get("/auth/me")
-    .then(res => dispatch(getUser(res.data || defaultUser)))
+    .then(res => {
+      return dispatch(getUser(res.data || defaultUser))
+      .then(res => {
+        dispatch(fetchOrders())
+        dispatch(fetchOrder())
+      });
+    })
     .catch(err => console.log(err));
 
 export const auth = (email, password, method) => dispatch =>
@@ -32,7 +40,8 @@ export const auth = (email, password, method) => dispatch =>
     .post(`/auth/${method}`, { email, password })
     .then(res => {
       dispatch(getUser(res.data));
-      dispatch(fetchCart());
+      dispatch(fetchOrders())
+      dispatch(fetchOrder());
       history.push("/home");
     })
     .catch(error => dispatch(getUser({ error })));
@@ -42,7 +51,8 @@ export const logout = () => dispatch =>
     .post("/auth/logout")
     .then(_ => {
       dispatch(removeUser());
-      dispatch(getCart());
+      dispatch(fetchOrders())
+      dispatch(fetchOrder());
       history.push("/login");
     })
     .catch(err => console.log(err));

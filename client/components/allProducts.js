@@ -20,11 +20,8 @@ class AllProducts extends Component {
     this.handleCategory(evt.target.value);
   }
 
-  handleAddToCart(productId, orderId, quantity) {
-    if (!this.props.isLoggedIn) {
-      return alert("Please log in or sign up to order.");
-    }
-    this.props.addCart(productId, orderId, +quantity);
+  handleAddToCart(productId, orderId) {
+    this.props.addCart(productId, orderId, 1);
   }
   handleCategory(category) {
     this.props.getCategory(category);
@@ -113,7 +110,7 @@ class AllProducts extends Component {
                       <button
                         className="btn btn-default"
                         onClick={() =>
-                          this.handleAddToCart(product.id, orderId, 1)}
+                          this.handleAddToCart(product.id, orderId)}
                         value={product.id}
                       >
                         Add To Cart
@@ -126,7 +123,7 @@ class AllProducts extends Component {
                 const button = (
                   <button
                     className="btn btn-default"
-                    onClick={() => this.handleAddToCart(product.id, orderId, 1)}
+                    onClick={() => this.handleAddToCart(product.id, orderId)}
                     value={product.id}
                   >
                     Add To Cart
@@ -160,7 +157,7 @@ function mapStateToProps(state) {
     categories: state.category.categories,
     selectedCategory: state.category.selectedCategory,
     order: state.orders,
-    orderId: state.orders.id,
+    orderId: state.cart.id,
     isLoggedIn: !!state.user.id
   };
 }
