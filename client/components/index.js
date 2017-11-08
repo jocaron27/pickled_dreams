@@ -11,4 +11,6 @@ export { default as WriteReview } from './reviewForm';
 export { default as SingleProduct } from './SingleProduct';
 export { default as ShippingOrderForm } from './ShippingOrderForm';
 export { default as AllCategories } from './AllCategories';
+export { default as UserOrders } from './UserOrders';
+
 export { Login, Signup } from './auth-form';

@@ -28,16 +28,24 @@ router.get('/', (req, res, next) => {
     }
 })
 
-router.get('/:id', (req, res, next) => {
-    Order.findById(req.params.id)
+router.get('/orderhistory/:userId', (req, res, next) => {
+    Order.findAll({
+        where: {
+            userId: req.params.userId,
+            status: {
+                $ne: 'cart'
+            }
+        },
+        include: [{ model: Product }]
+    })
         .then(order => {
-            if (req.user && (req.user.isAdmin || req.user.id === order.userId)) {
-                res.json(order)
-                    .catch(next)
+            if (req.user) {
+                return res.json(order)
             } else {
                 res.sendStatus(401)
             }
         })
+        .catch(next);
 
 })
 router.delete('/:orderId/product/:productId', (req, res, next) => {

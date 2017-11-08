@@ -14,7 +14,8 @@ import {
   ShoppingCart,
   SingleProduct,
   ShippingOrderForm,
-  AllCategories
+  AllCategories,
+  UserOrders
 } from "./components";
 
 import { me } from "./store";
@@ -23,6 +24,7 @@ import { fetchReviews } from "./store/reviews";
 import { fetchOrders, addToCart } from "./store/orders";
 import { fetchCart } from "./store/order_products"
 import { fetchCategories } from "./store/categories"
+import { fetchUserOrders } from "./store/orders"
 
 /**
  * COMPONENT
@@ -61,6 +63,7 @@ class Routes extends Component {
                 {/* Routes placed here are only available after logging in */}
                 <Route path="/home" component={UserHome} />
                 <Route exact path="/categories" component={AllCategories} />
+                <Route path="/orders" component={UserOrders} />
               </Switch>
             )}
             {/* Displays our Login component as a fallback */}

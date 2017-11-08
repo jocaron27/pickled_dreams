@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { logout } from '../store'
-import {getSearch} from '../store/products'
-import {getCategory} from '../store/categories'
+import { getSearch } from '../store/products'
+import { getCategory } from '../store/categories'
 
 /**
  * COMPONENT
@@ -22,7 +22,7 @@ const Main = (props) => {
       <nav>
         <div id="nav-logo">
           <Link to="/" onClick={() => {
-            clearSearch(); 
+            clearSearch();
             clearCategory();
           }}><h1>Pickled Dreams</h1></Link>
         </div>
@@ -33,6 +33,7 @@ const Main = (props) => {
                 {/* The navbar will show these links after you log in */}
                 <Link to="/home">Home</Link>
                 <a href="#" onClick={handleClick}>Logout</a>
+                <Link to="/orders">View Orders</Link>
               </div>
               : <div>
                 {/* The navbar will show these links before you log in */}
@@ -40,7 +41,7 @@ const Main = (props) => {
                 <Link to="/signup">Sign Up</Link>
               </div>
           }
-          <Link to='/shopping-cart'><button className="btn btn-default"> Cart</button></Link>
+          <Link to='/shopping-cart'><button className="btn btn-default">Cart</button></Link>
         </div>
       </nav>
       <hr />
