@@ -25,7 +25,7 @@ function SingleProduct(props) {
         quantityAvailable: 0
       });
 
-  let chosenQuantity;
+  let chosenQuantity = 1;
   const handleQuantity = function(evt) {
     evt.preventDefault();
     chosenQuantity = evt.target.value;
