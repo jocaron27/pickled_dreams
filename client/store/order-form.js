@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {fetchOrder} from './cart';
 
 const WRITE_ADDRESS = 'WRITE_ADDRESS';
 const WRITE_CITY = 'WRITE_CITY';
@@ -49,7 +50,7 @@ export function submitOrder(order) {
 export function orderSubmission(order) {
   return function thunk(dispatch) {
     return axios.put(`/api/orders/submit`, order)
-      .then(res => console.log(res.data))
+      .then(() => dispatch(fetchOrder()))
   }
 }
 
