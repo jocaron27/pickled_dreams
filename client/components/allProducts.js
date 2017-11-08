@@ -96,6 +96,15 @@ class AllProducts extends Component {
         <div className="product-list" key={products.id}>
           {selectedCategory || inputValue
             ? filteredProdsByName.map(product => {
+              const button = (
+                <button
+                  className="btn btn-default"
+                  onClick={() => this.handleAddToCart(product.id, orderId)}
+                  value={product.id}
+                >
+                  Add To Cart
+                  </button>
+              );
               return (
                 <div className="product-container" key={product.id}>
                   <div className="product-title">{product.title}</div>
@@ -106,14 +115,7 @@ class AllProducts extends Component {
                   </Link>
                   <div className="item-price">
                     <span>${product.price}</span>
-                    <button
-                      className="btn btn-default"
-                      onClick={() =>
-                        this.handleAddToCart(product.id, orderId)}
-                      value={product.id}
-                    >
-                      Add To Cart
-                      </button>
+                    {isLoggedIn ? button : <span />}
                   </div>
                 </div>
               );

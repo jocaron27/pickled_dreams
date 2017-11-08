@@ -111,6 +111,7 @@ router.put("/addToCart", (req, res, next) => {
         .then(order => res.json(order))
         .catch(next);
 });
+
 router.put('/updateCart', (req, res, next) => {
     if (req.user) {
         OrderProduct.findOne({
