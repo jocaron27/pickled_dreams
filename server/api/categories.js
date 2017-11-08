@@ -23,7 +23,7 @@ router.get('/:id', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
     if (req.user && req.user.isAdmin) {
-        Category.create(req.body)
+        Category.create({ name: req.body.category })
             .then(category => res.json(category))
             .catch(next)
     } else {

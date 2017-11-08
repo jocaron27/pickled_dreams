@@ -15,6 +15,8 @@ const Main = props => {
     clearCategory
   } = props;
 
+
+  // Place this in when ready for adding past orders --> <Link to="/orders">My Orders</Link>
   return (
     <div>
       <nav>

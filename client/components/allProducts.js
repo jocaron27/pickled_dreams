@@ -61,8 +61,7 @@ class AllProducts extends Component {
         : false;
     });
     const messageLoggedIn = "Welcome!";
-    const messageLoggedOut =
-      "Welcome! Please sign up or log in to start shopping.";
+    const messageLoggedOut = "Welcome! Please sign up or log in to start shopping.";
     return (
       <div className="main">
         <form
@@ -97,53 +96,53 @@ class AllProducts extends Component {
         <div className="product-list" key={products.id}>
           {selectedCategory || inputValue
             ? filteredProdsByName.map(product => {
-                return (
-                  <div className="product-container" key={product.id}>
-                    <div className="product-title">{product.title}</div>
-                    <Link to={`/products/${product.id}`} className="list-link">
-                      <div className="product">
-                        <img src={product.photo} width="200px" />
-                      </div>
-                    </Link>
-                    <div className="item-price">
-                      <span>${product.price}</span>
-                      <button
-                        className="btn btn-default"
-                        onClick={() =>
-                          this.handleAddToCart(product.id, orderId)}
-                        value={product.id}
-                      >
-                        Add To Cart
+              return (
+                <div className="product-container" key={product.id}>
+                  <div className="product-title">{product.title}</div>
+                  <Link to={`/products/${product.id}`} className="list-link">
+                    <div className="product">
+                      <img src={product.photo} width="200px" />
+                    </div>
+                  </Link>
+                  <div className="item-price">
+                    <span>${product.price}</span>
+                    <button
+                      className="btn btn-default"
+                      onClick={() =>
+                        this.handleAddToCart(product.id, orderId)}
+                      value={product.id}
+                    >
+                      Add To Cart
                       </button>
-                    </div>
                   </div>
-                );
-              })
+                </div>
+              );
+            })
             : products.map(product => {
-                const button = (
-                  <button
-                    className="btn btn-default"
-                    onClick={() => this.handleAddToCart(product.id, orderId)}
-                    value={product.id}
-                  >
-                    Add To Cart
+              const button = (
+                <button
+                  className="btn btn-default"
+                  onClick={() => this.handleAddToCart(product.id, orderId)}
+                  value={product.id}
+                >
+                  Add To Cart
                   </button>
-                );
-                return (
-                  <div className="product-container" key={product.id}>
-                    <div className="product-title">{product.title}</div>
-                    <Link to={`/products/${product.id}`} className="list-link">
-                      <div className="product">
-                        <img src={product.photo} width="200px" />
-                      </div>
-                    </Link>
-                    <div className="item-price">
-                      <span>${product.price}</span>
-                      {isLoggedIn ? button : <span />}
+              );
+              return (
+                <div className="product-container" key={product.id}>
+                  <div className="product-title">{product.title}</div>
+                  <Link to={`/products/${product.id}`} className="list-link">
+                    <div className="product">
+                      <img src={product.photo} width="200px" />
                     </div>
+                  </Link>
+                  <div className="item-price">
+                    <span>${product.price}</span>
+                    {isLoggedIn ? button : <span />}
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
         </div>
       </div>
     );

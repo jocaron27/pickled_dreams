@@ -44,11 +44,7 @@ function SingleProduct(props) {
     ? (displayedQuantity = actualQuantity)
     : (displayedQuantity = 25);
 
-  let selectDiv = document.createElement("div");
-  let select = document.createElement("select");
-  select.className = "single-product-select";
-  selectDiv.appendChild(select);
-
+    
   let options = [];
 
   for (let i = 1; i < displayedQuantity; i++) {

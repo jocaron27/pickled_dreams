@@ -30,7 +30,7 @@ export function fetchOrder() {
 }
 
 export function addCart(productId, orderId, quantity) {
-  return function(dispatch) {
+  return function (dispatch) {
     return axios
       .put("/api/orders/addToCart", { productId, orderId, quantity })
       .then(() => dispatch(fetchOrder()))
@@ -42,7 +42,7 @@ export function addCart(productId, orderId, quantity) {
 }
 
 export function removeFromCart(productId, orderId) {
-  return function(dispatch) {
+  return function (dispatch) {
     return axios
       .delete(`/api/orders/${orderId}/product/${productId}`)
       .then(res => {
@@ -51,10 +51,17 @@ export function removeFromCart(productId, orderId) {
       .catch(console.error);
   };
 }
+export function updateItemQuantity(productId, orderId, quantity) {
+  return function thunk(dispatch) {
+    return axios.put('/api/orders/updateCart', { productId, orderId, quantity })
+      .then(() => dispatch(fetchOrder()))
+      .catch(console.error)
+  }
+}
 
 //Reducer
 
-const reducer = function(state = initialState, action) {
+const reducer = function (state = initialState, action) {
   switch (action.type) {
     case GET_CURRENT_ORDER:
       return action.order;
