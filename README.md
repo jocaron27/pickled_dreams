@@ -1,3 +1,6 @@
+#Deployed on Heroku
+https://pickleddreams.herokuapp.com/
+
 #Requirements
 
 Node > 6.0
