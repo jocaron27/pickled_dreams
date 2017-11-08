@@ -14,6 +14,7 @@ import {
   ShoppingCart,
   SingleProduct,
   ShippingOrderForm,
+  ConfirmationPage,
   AllCategories,
   UserOrders
 } from "./components";
@@ -21,26 +22,26 @@ import {
 import { me } from "./store";
 import { fetchProducts } from "./store/products";
 import { fetchReviews } from "./store/reviews";
-import { fetchOrders, addToCart } from "./store/orders";
-import { fetchCart } from "./store/order_products"
-import { fetchCategories } from "./store/categories"
-import { fetchUserOrders } from "./store/orders"
-
+import { fetchOrders } from "./store/orders";
+import { fetchOrder } from "./store/cart";
+import { fetchCategories } from "./store/categories";
+import { fetchUserOrders } from "./store/orders";
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData()
-    this.props.loadProducts()
-    this.props.loadOrders()
-    this.props.loadCart()
-    this.props.loadReviews();
-    this.props.loadCategories();
+    this.props.me();
+    this.props.fetchProducts();
+    this.props.fetchCategories();
+    this.props.fetchOrders();
+    this.props.fetchOrder();
+    this.props.fetchReviews();
   }
-  componentWillReceiveProps() {
-    this.props.loadCart()
-  }
+
+  // componentWillReceiveProps() {
+  //   this.props.fetchOrder();
+  // }
 
   render() {
     const { isLoggedIn } = this.props;
@@ -58,6 +59,12 @@ class Routes extends Component {
             <Route exact path="/products/:id" component={SingleProduct} />
             <Route exact path="/shopping-cart" component={ShoppingCart} />
             <Route exact path="/checkout" component={ShippingOrderForm} />
+            <Route
+              exact
+              path="/confirmation-page"
+              component={ConfirmationPage}
+            />
+
             {isLoggedIn && (
               <Switch>
                 {/* Routes placed here are only available after logging in */}
@@ -91,30 +98,13 @@ const mapState = state => {
   };
 };
 
-const mapDispatch = dispatch => {
-  return {
-    loadInitialData() {
-      dispatch(me());
-    },
-    loadProducts() {
-      dispatch(fetchProducts());
-    },
-    loadCategories() {
-      dispatch(fetchCategories());
-    },
-    loadOrders() {
-      dispatch(fetchOrders());
-    },
-    loadCart() {
-      dispatch(fetchCart())
-    },
-    loadReviews() {
-      dispatch(fetchReviews());
-    },
-    addItem() {
-      dispatch(addToCart());
-    }
-  };
+const mapDispatch = {
+  me,
+  fetchProducts,
+  fetchCategories,
+  fetchOrders,
+  fetchOrder,
+  fetchReviews
 };
 
 export default connect(mapState, mapDispatch)(Routes);
@@ -123,11 +113,5 @@ export default connect(mapState, mapDispatch)(Routes);
  * PROP TYPES
  */
 Routes.propTypes = {
-  loadInitialData: PropTypes.func.isRequired,
-  loadProducts: PropTypes.func.isRequired,
-  loadOrders: PropTypes.func.isRequired,
-  loadCart: PropTypes.func.isRequired,
-  loadCategories: PropTypes.func.isRequired,
-  loadReviews: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 };

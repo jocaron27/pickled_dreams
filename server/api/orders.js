@@ -1,34 +1,42 @@
-const router = require('express').Router()
-const { Order, Product, OrderProduct } = require('../db/models')
-const chalk = require('chalk')
-module.exports = router
-
+const router = require("express").Router();
+const { Order, Product, OrderProduct } = require("../db/models");
+module.exports = router;
 
 // ('api/orders...')
 
-router.get('/', (req, res, next) => {
-
+router.get("/", (req, res, next) => {
     if (req.user && req.user.isAdmin) {
         Order.findAll()
             .then(orders => res.json(orders))
-            .catch(next)
-
+            .catch(next);
     } else if (req.user) {
         Order.findOne({
             where: {
-                userId: req.user.id,
-                status: 'cart'
+                userId: req.user.id
             },
             include: [{ model: Product }]
         })
             .then(order => res.json(order))
-            .catch(next)
-    } else {
-        res.sendStatus(404);
+            .catch(next);
     }
-})
+});
 
-router.get('/orderhistory/:userId', (req, res, next) => {
+router.get("/cart", (req, res, next) => {
+    if (req.user) {
+        Order.findOne({
+            where: {
+                userId: req.user.id,
+                status: "cart"
+            },
+            include: [{ model: Product }]
+        })
+            .then(order => {
+                res.json(order);
+            })
+            .catch(next);
+    }
+});
+router.get('/orderhistory', (req, res, next) => {
     Order.findAll({
         where: {
             userId: req.params.userId,
@@ -46,18 +54,62 @@ router.get('/orderhistory/:userId', (req, res, next) => {
             }
         })
         .catch(next);
-
 })
-router.delete('/:orderId/product/:productId', (req, res, next) => {
-    OrderProduct.findOne({
+
+router.get("/:id", (req, res, next) => {
+    Order.findById(req.params.id).then(order => {
+        if (req.user && (req.user.isAdmin || req.user.id === order.userId)) {
+            res.json(order).catch(next);
+        } else {
+            res.sendStatus(401);
+        }
+    });
+});
+
+
+router.put("/submit", (req, res, next) => {
+    const userId = req.user.id;
+    Order.findOne({
         where: {
-            orderId: req.params.orderId,
-            productId: req.params.productId
+            userId: userId,
+            status: "cart"
         }
     })
-        .then(order => order.destroy())
-        .catch(next)
-})
+        .then(order =>
+            order.update({
+                status: "pending",
+                date: new Date(),
+                shippingAddress: req.body.shippingAddress
+            })
+        )
+        .then(Order.create({ userId: userId }))
+        .then(order => res.json(order))
+        .catch(next);
+});
+
+
+///ADD TO CART
+router.put("/addToCart", (req, res, next) => {
+    OrderProduct.findOrCreate({
+        where: {
+            orderId: req.body.orderId,
+            productId: req.body.productId
+        }
+    })
+        .spread((order, isCreated) => {
+            if (isCreated) {
+                return order.update({
+                    quantity: req.body.quantity
+                });
+            } else {
+                return order.update({
+                    quantity: order.quantity + req.body.quantity
+                });
+            }
+        })
+        .then(order => res.json(order))
+        .catch(next);
+});
 router.put('/updateCart', (req, res, next) => {
     if (req.user) {
         OrderProduct.findOne({
@@ -71,90 +123,38 @@ router.put('/updateCart', (req, res, next) => {
             .catch(next)
     }
 })
-
-router.put('/submit', (req, res, next) => {
-    const userId = req.user.id
-    Order.findOne({
+//Removing from cart 
+router.delete("/:orderId/product/:productId", (req, res, next) => {
+    OrderProduct.findOne({
         where: {
-            userId: userId,
-            status: 'cart'
+            orderId: req.params.orderId,
+            productId: req.params.productId
         }
     })
-        .then(order => order.update({
-            status: 'pending',
-            date: new Date(),
-            shippingAddress: req.body.shippingAddress
-        }))
-        .then(Order.create({ userId: userId }))
-        .then(order => res.json(order))
-        .catch(next)
-
-})
-
-///ADD TO CART
-router.put('/addToCart', (req, res, next) => {
-    chalk.green(req.body)
-    OrderProduct.findOrCreate({
-        where: {
-            orderId: req.body.orderId,
-            productId: req.body.productId
-        }
-    })
-        .spread((order, isCreated) => {
-            if (isCreated) {
-                chalk.blue('THIS IS THE ORDER', order)
-                return order.update({
-                    quantity: req.body.quantity
-                })
-            } else {
-                return order.update({
-                    quantity: order.quantity + req.body.quantity
-                })
-            }
+        .then(cartItem => {
+            return cartItem.destroy();
         })
-        .then(order => res.json(order))
+        .then(() => res.json("done"))
         .catch(next);
-})
-
-
-
-router.post('/', (req, res, next) => {///this is when someone makes 
-    Order.create({ userId: req.user.id })
-        .then(order => res.json(order))
-        .catch(next)
-})
-// router.post('/', (req,res,next)=> {
-//   console.log('req.body', req.body)  
-// //   console.log('req.user',req.user.id)
-//   Order.create(req.body)
-//     .then(order => {
-//         if (!order) {
-//             console.log('order')
-//             res.json(order)
-//         } else {
-//             // console.log('ORDER EXISTS')
-//             res.status(400).send('ORDER EXISTS')
-//         }
-//         // res.json(order)
-
-//     })
-//     .catch(next)
-
-
+});
 
 //ONLY ADMINS CAN EDIT ORDER
-router.put('/:id', (req, res, next) => {
+router.put("/:id", (req, res, next) => {
     if (req.user && req.user.isAdmin) {
         Order.findById(req.params.id)
-            .then(order => order.update({
-                status: req.body.status
-            }))
+            .then(order =>
+                order.update({
+                    status: req.body.status
+                })
+            )
             .then(order => res.json(order))
-            .catch(next)
+            .catch(next);
     } else {
-        res.sendStatus(401)
+        res.sendStatus(401);
     }
-})
+});
+
+
 
 // DO NOT NEED TO DELETE ORDERS
 // router.delete('/:id', (req,res,next)=>{

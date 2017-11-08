@@ -1,5 +1,4 @@
 const router = require('express').Router()
-const chalk = require('chalk');
 const db = require('../db/models');
 const { OrderProduct, Order, Product } = require('../db/models')
 

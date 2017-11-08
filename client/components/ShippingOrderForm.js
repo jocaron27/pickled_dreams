@@ -71,15 +71,18 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleOrderSubmission(event) {
+      console.log('OWNPROPS', ownProps)
       event.preventDefault()
       const address = event.target.address.value
       const city = event.target.city.value
       const stateOfCity = event.target.state.value
       const order = { shippingAddress: `${address} ${city}, ${stateOfCity}` }
       dispatch(orderSubmission(order))
+      ownProps.history.push('/confirmation-page')
+      
     },
     handleAddress(event) {
       dispatch(writeAddress(event.target.value))

@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { removeFromCart, updateItemQuantity } from '../store/order_products';
-
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { removeFromCart, addCart, fetchOrder, updateItemQuantity } from "../store/cart";
 
 function ShoppingCart(props) {
+  // let userOrder = orders.find(order => order.status === 'cart');
+
   let subtotal = 0;
 
   function quantityOptions(currentQuantity) {
@@ -26,55 +27,72 @@ function ShoppingCart(props) {
       <div id="shoppingcart-all-items">
         <h3>All Items In Cart:</h3>
         <ul>
-          {props.order.products && props.order.products.map((product) => {
-            subtotal += (product.order_product.quantity * product.price)
-            return (
-              <li key={product.id} className="shoppingcart-single-item">
-                <Link to={`/products/${product.id}`}>
-                  <img className="media-object" src={product.photo} width="50px" />
-                </Link>
-                <h3>{product.title}</h3>
-                <p>Qty: {product.order_product.quantity}  Price: $ {product.price}</p>
-                <select onChange={(event) => props.handleUpdate(product.id, props.order.id, event.target.value)} defaultValue={product.order_product.quantity}>
-                  {
-                    quantityOptions(product.order_product.quantity)
-                  }
-                </select>
-                <hr />
-                <button onClick={() => props.handleRemove(product.id, props.order.id)}>Remove From Cart</button>
-              </li>
-            )
-          })
-          }
+          {props.cart.products &&
+            props.cart.products.map(product => {
+              subtotal += product.order_product.quantity * product.price;
+              return (
+                <li key={product.id} className="shoppingcart-single-item">
+                  <Link to={`/products/${product.id}`}>
+                    <img
+                      className="media-object"
+                      src={product.photo}
+                      width="50px"
+                    />
+                  </Link>
+                  <h3>{product.title}</h3>
+                  <p>
+                    Qty: {product.order_product.quantity} Price: ${" "}
+                    {product.price}
+                  </p>
+                  <select onChange={(event) => props.handleUpdate(product.id, props.order.id, event.target.value)} defaultValue={product.order_product.quantity}>
+                    {
+                      quantityOptions(product.order_product.quantity)
+                    }
+                  </select>
+                  <button
+                    onClick={() =>
+                      props.handleRemove(product.id, props.cart.id)}
+                  >
+                    Remove From Cart
+                  </button>
+                  <hr />
+                </li>
+              );
+            })}
         </ul>
       </div>
 
       <div>
         <h3>Subtotal: $ {subtotal}</h3>
-        <Link to={'/checkout'}>
-          <button>Proceed to Checkout</button>
+        <Link to={"/checkout"}>
+          <button type="button" disabled={!subtotal}>
+            Proceed to Checkout
+          </button>
         </Link>
       </div>
     </div>
-  )
-
+  );
 }
 
 function mapStateToProps(state) {
   return {
-    order: state.orders
-  }
+    cart: state.cart
+  };
 }
 function mapDispatchToProps(dispatch) {
   return {
     handleRemove(productId, orderId) {
       dispatch(removeFromCart(productId, orderId))
+      alert("Item removed!");
+      dispatch(removeFromCart(productId, orderId));
+      dispatch(fetchOrder());
     },
     handleUpdate(productId, orderId, quantity) {
       dispatch(updateItemQuantity(productId, orderId, quantity))
+      dispatch(fetchOrder())
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
 
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCart);

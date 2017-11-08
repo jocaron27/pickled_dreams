@@ -1,16 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
-//initial state
-const initialState = {
 
-}
+
+const initialState = [];
+//add users previous orders
+//add users current order
 
 //ACTIONS
 
 const GET_ORDERS = "GET_ORDERS";
-const ADD_ITEM_TO_ORDER = "ADD_ITEM_TO_ORDER"
-const GET_USERS_ORDERS = "GET_USERS_ORDERS"
-
+const ADD_ITEM_TO_ORDER = "ADD_ITEM_TO_ORDER";
+const GET_USERS_PAST_ORDERS = "GET_USERS_PAST_ORDERS"
 
 //ACTION CREATORS
 
@@ -21,32 +21,38 @@ export function getOrders(orders) {
 export function addToOrder(item) {
     return { type: ADD_ITEM_TO_ORDER, item }
 }
-export function getUsersOrders(userOrders) {
-    return { type: GET_USERS_ORDERS, userOrders }
+export function getUsersPastOrders(pastOrders) {
+    return { type: GET_USERS_PAST_ORDERS, pastOrders }
 }
 
-//THUNK 
+
+
+
+
+//THUNK
 
 export function fetchOrders() {
     return function thunk(dispatch) {
-        return axios.get('/api/orders')
+        return axios
+            .get("/api/orders")
             .then(res => dispatch(getOrders(res.data)))
-            .catch(console.error)
-    }
-}
-
-export function fetchUsersOrders(id) {///can be refactored to only use req.user.id since the id of the user is persisted across the session
-    return function thunk(dispatch) {
-        return axios.get(`/api/orders/orderhistory/${id}`)
-            .then(res => dispatch(getUsersOrders(res.data)))
-            .catch(console.error)
-    }
+            .catch(console.err);
+    };
 }
 
 export function addToCart(product) {
     return function thunk(dispatch) {
-        return axios.post('/api/orders', product)
+        return axios
+            .post("/api/orders", product)
             .then(res => dispatch(addToOrder(res.data)))
+            .catch(console.err);
+    };
+}
+
+export function fetchUsersOrders() {
+    return function thunk(dispatch) {
+        return axios.get(`/api/orders/orderhistory`)
+            .then(res => dispatch(getUsersPastOrders(res.data)))
             .catch(console.error)
     }
 }
@@ -56,14 +62,14 @@ export function addToCart(product) {
 const reducer = function (state = initialState, action) {
     switch (action.type) {
         case GET_ORDERS:
-            return action.orders
+            return action.orders;
         case ADD_ITEM_TO_ORDER:
-            return action.item
-        case GET_USERS_ORDERS:
-            return action.userOrders
+            return action.item;
+        case GET_USERS_PAST_ORDERS:
+            return action.pastOrders
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default reducer;
